@@ -1,0 +1,10 @@
+name: flucumber
+
+packages:
+  - example/**
+  - flucumber/**
+  - flucumber_annotations/**
+
+command:
+  bootstrap:
+    usePubspecOverrides: true

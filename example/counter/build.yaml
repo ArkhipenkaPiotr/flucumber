@@ -1,0 +1,7 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+      - pubspec.*
+      - $package$
+      - integration_test/**.dart
