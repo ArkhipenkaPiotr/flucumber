@@ -16,5 +16,5 @@ builders:
     builder_factories: ["flucumberBuilder"]
     build_extensions: { ".dart": [".flucumber.dart"] }
     auto_apply: dependents
-    build_to: cache
+    build_to: source
     applies_builders: ["source_gen|combining_builder"]
