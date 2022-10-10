@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:flucumber_annotations/flucumber_annotations.dart';
+import 'package:flucumber/src/annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 

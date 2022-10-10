@@ -1,6 +1,6 @@
-import 'package:flucumber_annotations/flucumber_annotations.dart';
+import 'package:flucumber/flucumber.dart';
 
-part 'counter_step.g.dart';
+// part 'counter_step.g.dart';
 
 @FlucumberStep()
 class CounterStep {

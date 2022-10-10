@@ -1,6 +1,4 @@
-# melos_managed_dependency_overrides: flucumber,flucumber_annotations
+# melos_managed_dependency_overrides: flucumber
 dependency_overrides:
   flucumber:
     path: ../../flucumber
-  flucumber_annotations:
-    path: ../../flucumber_annotations

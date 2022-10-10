@@ -10,8 +10,6 @@ environment:
 dependencies:
   build:
   source_gen:
-  flucumber_annotations:
-    path: ../flucumber_annotations
   flutter:
     sdk: flutter
 
