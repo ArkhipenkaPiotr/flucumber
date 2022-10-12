@@ -12,7 +12,7 @@ targets:
 builders:
   flucumber:
     target: ":flucumber"
-    import: "package:flucumber/flucumber.dart"
+    import: "package:flucumber_generator/flucumber_generator.dart"
     builder_factories: ["flucumberBuilder"]
     build_extensions: { ".dart": [".flucumber.dart"] }
     auto_apply: dependents

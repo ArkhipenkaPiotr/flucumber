@@ -13,3 +13,9 @@ class Then {
 
   const Then(this.definition);
 }
+
+class Flucumber {
+  final String scenariosPath;
+
+  const Flucumber(this.scenariosPath);
+}

@@ -1,5 +1,5 @@
-name: flucumber
-description: Cucumber port for flutter
+name: flucumber_generator
+description: Generator for flucumber
 version: 0.0.1
 publish_to: none
 

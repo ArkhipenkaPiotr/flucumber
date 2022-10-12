@@ -1,6 +1,7 @@
-import 'package:flucumber/src/context/flucumber_context.dart';
-import 'package:flucumber/src/runners/step_runner.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../context/flucumber_context.dart';
+import 'step_runner.dart';
 
 class ScenarioRunner {
   final List<StepRunner> steps;

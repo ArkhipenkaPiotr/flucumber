@@ -190,6 +190,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  flucumber_generator:
+    dependency: "direct dev"
+    description:
+      path: "../../flucumber_generator"
+      relative: true
+    source: path
+    version: "0.0.1"
   flutter:
     dependency: "direct main"
     description: flutter

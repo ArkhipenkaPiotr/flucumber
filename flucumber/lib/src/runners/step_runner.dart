@@ -1,4 +1,5 @@
-import 'package:flucumber/src/context/flucumber_context.dart';
+
+import '../context/flucumber_context.dart';
 
 class StepRunner {
   final String name;
