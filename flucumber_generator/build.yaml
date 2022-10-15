@@ -10,11 +10,16 @@ targets:
         enabled: true
 
 builders:
-  flucumber:
-    target: ":flucumber"
+  flucumber_steps_generator:
     import: "package:flucumber_generator/flucumber_generator.dart"
-    builder_factories: ["flucumberBuilder"]
-    build_extensions: { ".dart": [".flucumber.dart"] }
+    builder_factories: [ "flucumberStepsBuilder" ]
+    build_extensions: { ".dart": [ ".flucumber.json" ] }
+    auto_apply: dependents
+    runs_before: [ "flucumber|flucumber" ]
+    build_to: cache
+  flucumber:
+    import: "package:flucumber_generator/flucumber_generator.dart"
+    builder_factories: [ "flucumberBuilder" ]
+    build_extensions: { ".dart": [ ".flucumber.dart" ] }
     auto_apply: dependents
     build_to: source
-    applies_builders: ["source_gen|combining_builder"]

@@ -1,17 +1,31 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:flucumber_generator/flucumber_generator.dart';
+import 'package:glob/glob.dart';
 import 'package:path/path.dart';
 import 'package:source_gen/source_gen.dart';
 
 class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
+  final Map<String, String> _stepsMethods = {};
+
   @override
-  generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) {
-    print('Try to generate flucumber');
+  generateForAnnotatedElement(
+      Element element, ConstantReader annotation, BuildStep buildStep) async {
+
+    final configFiles = Glob('integration_test/**.flucumber_steps.json');
+    final ids = buildStep.findAssets(configFiles);
+
     final result = StringBuffer();
-    result.writeln("import 'package:flucumber/flucumber.dart';\n");
+    result.writeln("import 'package:flucumber/flucumber.dart';");
+
+    await for (final id in ids) {
+      await _writeImportOfAssets(result, id);
+      await _addStepsToMap(buildStep, id);
+    }
+
     result.writeln('void runIntegrationTest([List<String>? scenariosToRun]) {');
 
     _generateFeatures(result, annotation);
@@ -19,6 +33,16 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
     result.writeln('}');
 
     return result.toString();
+  }
+
+  Future _writeImportOfAssets(StringBuffer resultBuffer, AssetId assetId) async {
+    resultBuffer.writeln("import '${assetId.package}';");
+  }
+
+  Future _addStepsToMap(BuildStep step, AssetId id) async {
+    final content = await step.readAsString(id);
+    final stepsMap = jsonDecode(content) as Map<String, String>;
+    _stepsMethods.addAll(stepsMap);
   }
 
   void _generateFeatures(StringBuffer resultBuffer, ConstantReader annotation) {
@@ -30,10 +54,8 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
 
     resultBuffer.writeln('final features = {');
     directory.listSync(recursive: true).forEach((element) {
-      print('File ${element.path}');
       final fileExtension = extension(element.path);
       if (fileExtension == '.feature') {
-        print('Parsing... ${element.path}');
         _generateFeature(resultBuffer, element);
       }
     });
@@ -71,7 +93,7 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
     resultBuffer.writeln("steps: [");
     _generateSteps(resultBuffer, scenarioContent);
     resultBuffer.writeln("],");
-    resultBuffer.writeln(')');
+    resultBuffer.writeln('),');
   }
 
   void _generateSteps(StringBuffer resultBuffer, String scenarioContent) {
