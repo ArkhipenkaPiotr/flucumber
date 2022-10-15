@@ -1,15 +1,19 @@
-
 import '../context/flucumber_context.dart';
 
 class StepRunner {
-  final String name;
-  final dynamic _runnerFunction;
+  final String actualStep;
+  final String stepSource;
+  final dynamic runnerFunction;
 
-  StepRunner(this.name, this._runnerFunction);
+  StepRunner({
+    required this.actualStep,
+    required this.runnerFunction,
+    required this.stepSource,
+  });
 
   Future runStep(FlucumberContext context) async {
-    if (_runnerFunction is Future Function()) {
-      (_runnerFunction as Function).call();
+    if (runnerFunction is Future Function()) {
+      await (runnerFunction as Function).call();
     }
   }
 }

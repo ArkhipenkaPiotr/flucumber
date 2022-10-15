@@ -68,7 +68,27 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
     final scenarioName = scenarioContent.split('\n').first.trim();
     resultBuffer.writeln('ScenarioRunner(');
     resultBuffer.writeln("scenarioName: '$scenarioName',");
-    resultBuffer.writeln("steps: [],");
+    resultBuffer.writeln("steps: [");
+    _generateSteps(resultBuffer, scenarioContent);
+    resultBuffer.writeln("],");
     resultBuffer.writeln(')');
+  }
+
+  void _generateSteps(StringBuffer resultBuffer, String scenarioContent) {
+    scenarioContent
+        .split('\n')
+        .where((element) => element.contains('When') || element.contains('Then'))
+        .forEach((element) {
+      _generateStep(resultBuffer, element);
+    });
+  }
+
+  void _generateStep(StringBuffer resultBuffer, String stepContent) {
+    final step = stepContent.replaceFirst('When', '').replaceFirst('Then', '').trim();
+    resultBuffer.writeln('StepRunner(');
+    resultBuffer.writeln("actualStep: '$step',");
+    resultBuffer.writeln("stepSource: 'stepSource',");
+    resultBuffer.writeln("runnerFunction: () {},");
+    resultBuffer.writeln("),");
   }
 }
