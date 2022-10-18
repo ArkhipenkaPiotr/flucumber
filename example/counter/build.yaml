@@ -4,4 +4,4 @@ targets:
       - lib/**
       - pubspec.*
       - $package$
-      - integration_test/**.dart
+      - integration_test/**

@@ -15,15 +15,16 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
   generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
 
-    final configFiles = Glob('integration_test/**.flucumber_steps.json');
+    final configFiles = Glob('**.flucumber_steps.json');
     final ids = buildStep.findAssets(configFiles);
 
     final result = StringBuffer();
     result.writeln("import 'package:flucumber/flucumber.dart';");
 
     await for (final id in ids) {
-      await _writeImportOfAssets(result, id);
-      await _addStepsToMap(buildStep, id);
+      print('${id.path} found');
+      // await _writeImportOfAssets(result, id);
+      // await _addStepsToMap(buildStep, id);
     }
 
     result.writeln('void runIntegrationTest([List<String>? scenariosToRun]) {');

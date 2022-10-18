@@ -1,25 +1,15 @@
-targets:
-  $default:
-    sources:
-      - lib/**
-      - pubspec.*
-      - $package$
-      - integration_test/**.dart
-    builders:
-      generators|annotations:
-        enabled: true
-
 builders:
   flucumber_steps_generator:
     import: "package:flucumber_generator/flucumber_generator.dart"
     builder_factories: [ "flucumberStepsBuilder" ]
-    build_extensions: { ".dart": [ ".flucumber.json" ] }
+    build_extensions: { ".dart": [ ".flucumber_steps.json" ] }
     auto_apply: dependents
     runs_before: [ "flucumber|flucumber" ]
     build_to: cache
   flucumber:
     import: "package:flucumber_generator/flucumber_generator.dart"
     builder_factories: [ "flucumberBuilder" ]
+    required_inputs: [".flucumber_steps.json"]
     build_extensions: { ".dart": [ ".flucumber.dart" ] }
     auto_apply: dependents
     build_to: source
