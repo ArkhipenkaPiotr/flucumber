@@ -17,5 +17,5 @@ class Then {
 class Flucumber {
   final String scenariosPath;
 
-  const Flucumber(this.scenariosPath);
+  const Flucumber({required this.scenariosPath});
 }

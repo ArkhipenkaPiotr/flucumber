@@ -4,17 +4,17 @@ import 'dart:io';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:flucumber_generator/flucumber_generator.dart';
+import 'package:flucumber_generator/src/steps_file_reference.dart';
 import 'package:glob/glob.dart';
 import 'package:path/path.dart';
 import 'package:source_gen/source_gen.dart';
 
 class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
-  final Map<String, String> _stepsMethods = {};
+  final List<StepsFileMetadata> _stepsFileMetadatas = [];
 
   @override
   generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
-
     final configFiles = Glob('**.flucumber_steps.json');
     final ids = buildStep.findAssets(configFiles);
 
@@ -22,9 +22,9 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
     result.writeln("import 'package:flucumber/flucumber.dart';");
 
     await for (final id in ids) {
-      print('${id.path} found');
-      // await _writeImportOfAssets(result, id);
-      // await _addStepsToMap(buildStep, id);
+      final stepsFileReference = await StepsFileMetadata.fromAssetId(buildStep, id);
+      result.writeln(stepsFileReference.importString);
+      _stepsFileMetadatas.add(stepsFileReference);
     }
 
     result.writeln('void runIntegrationTest([List<String>? scenariosToRun]) {');
@@ -34,16 +34,6 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
     result.writeln('}');
 
     return result.toString();
-  }
-
-  Future _writeImportOfAssets(StringBuffer resultBuffer, AssetId assetId) async {
-    resultBuffer.writeln("import '${assetId.package}';");
-  }
-
-  Future _addStepsToMap(BuildStep step, AssetId id) async {
-    final content = await step.readAsString(id);
-    final stepsMap = jsonDecode(content) as Map<String, String>;
-    _stepsMethods.addAll(stepsMap);
   }
 
   void _generateFeatures(StringBuffer resultBuffer, ConstantReader annotation) {
@@ -108,10 +98,27 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
 
   void _generateStep(StringBuffer resultBuffer, String stepContent) {
     final step = stepContent.replaceFirst('When', '').replaceFirst('Then', '').trim();
+
+    StepsFileMetadata? accordingStepsFile;
+    StepMetadata? accordingStep;
+    for (final stepsFile in _stepsFileMetadatas) {
+      final methodReference = stepsFile.findStep(step);
+      if (methodReference != null) {
+        accordingStepsFile = stepsFile;
+        accordingStep = methodReference;
+        break;
+      }
+    }
+    if (accordingStepsFile == null || accordingStep == null) {
+      throw Exception(
+          'Method reference for $step step is not found. \n Check is your step has according method');
+    }
+    final methodReference = accordingStepsFile.getMethodReferenceToStep(accordingStep);
+
     resultBuffer.writeln('StepRunner(');
     resultBuffer.writeln("actualStep: '$step',");
-    resultBuffer.writeln("stepSource: 'stepSource',");
-    resultBuffer.writeln("runnerFunction: () {},");
+    resultBuffer.writeln("stepSource: '${accordingStep.stepDefinition}',");
+    resultBuffer.writeln("runnerFunction: $methodReference,");
     resultBuffer.writeln("),");
   }
 }
