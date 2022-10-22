@@ -9,7 +9,11 @@ const TypeChecker _whenChecker = TypeChecker.fromRuntime(When);
 const TypeChecker _thenChecker = TypeChecker.fromRuntime(Then);
 
 class FlucumberStepsGenerator extends Generator {
-  static const _variablesPatterns = {'{int}': '[-0-9]+', '{double}' : '[-.0-9]+'};
+  static const _variablesPatterns = {
+    '{int}': '[-0-9]+',
+    '{double}': '[-.0-9]+',
+    '{string}': '\\"(.*?)\\"',
+  };
 
   @override
   FutureOr<String?> generate(LibraryReader library, BuildStep buildStep) async {
