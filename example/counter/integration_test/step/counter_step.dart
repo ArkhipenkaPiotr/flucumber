@@ -13,3 +13,7 @@ Future assertThatNumberOnScreenIsNot(FlucumberContext context) async {}
 
 @Then('Assert that number on screen is {int}')
 Future assertThatNumberOnScreenIs(FlucumberContext context) async {}
+
+@Then('Assert that timer value is {double}')
+Future assertThatTimerValueIs(FlucumberContext context) async {}
+
