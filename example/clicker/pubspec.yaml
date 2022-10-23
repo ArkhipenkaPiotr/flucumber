@@ -1,5 +1,5 @@
-name: counter
-description: Counter example for cucumber
+name: clicker
+description: Clicker-game example for flucumber package
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  flutter_bloc: ^8.1.1
 
 dev_dependencies:
   flutter_test:
@@ -19,7 +20,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  build_runner:
+  build_runner: ^2.3.2
   flucumber:
     path: ../../flucumber
   flucumber_generator:
