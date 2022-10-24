@@ -9,6 +9,7 @@ class FeatureRunner {
   const FeatureRunner({required this.scenarios, required this.name});
 
   void run() async {
+    print('Feature $name');
     group(name, () {
       for (final scenario in scenarios) {
         scenario.runScenario();

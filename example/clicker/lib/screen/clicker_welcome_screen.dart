@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ClickerWelcomeScreen extends StatelessWidget {
-  const ClickerWelcomeScreen({Key? key}) : super(key: key);
+  @visibleForTesting
+  static const screenKey = Key('ClickerWelcomeScreen');
+
+  @visibleForTesting
+  static const startGameKey = Key('ClickerWelcomeScreen.startGama');
+
+  const ClickerWelcomeScreen({Key? key = screenKey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +30,12 @@ class ClickerWelcomeScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 32),
-            ElevatedButton(onPressed: () {
-              context.read<ClickerCubit>().startGame();
-            }, child: const Text('Start!')),
+            ElevatedButton(
+                key: startGameKey,
+                onPressed: () {
+                  context.read<ClickerCubit>().startGame();
+                },
+                child: const Text('Start!')),
             const Spacer(flex: 3),
           ],
         ),

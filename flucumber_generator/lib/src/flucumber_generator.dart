@@ -27,11 +27,13 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
       _stepsFileMetadatas.add(stepsFileReference);
     }
 
-    result.writeln('void runIntegrationTest([List<String>? scenariosToRun]) {');
+    result.writeln(
+        'void runIntegrationTests(Function appMainFunction, [List<String> featuresToRun = const []]) {');
+    result.writeln(
+        'runFlucumberIntegrationTests(appMainFunction: appMainFunction, allFeatures: _features, featuresToRun: featuresToRun);');
+    result.writeln('}\n');
 
     _generateFeatures(result, annotation);
-
-    result.writeln('}');
 
     return result.toString();
   }
@@ -43,7 +45,7 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
       throw Exception("Directory ${directory.absolute.path} doesn't exist");
     }
 
-    resultBuffer.writeln('final features = {');
+    resultBuffer.writeln('final _features = {');
     directory.listSync(recursive: true).forEach((element) {
       final fileExtension = extension(element.path);
       if (fileExtension == '.feature') {
@@ -72,9 +74,9 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
 
   void _generateScenarios(StringBuffer resultBuffer, String featureContent) {
     final scenarios = featureContent.split('Scenario:')..removeAt(0);
-    scenarios.forEach((element) {
-      _generateScenario(resultBuffer, element);
-    });
+    for (final scenario in scenarios) {
+      _generateScenario(resultBuffer, scenario);
+    }
   }
 
   void _generateScenario(StringBuffer resultBuffer, String scenarioContent) {

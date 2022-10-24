@@ -1,6 +1,6 @@
-# counter
+# clicker
 
-Counter example for cucumber
+A new Flutter project.
 
 ## Getting Started
 

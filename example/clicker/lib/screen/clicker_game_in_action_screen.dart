@@ -7,9 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ClickerGameInActionScreen extends StatefulWidget {
+  @visibleForTesting
+  static const contentKey = Key('ClickerGameInActionScreen');
+
   final GameInActionClickerState state;
 
-  const ClickerGameInActionScreen({Key? key, required this.state}) : super(key: key);
+  const ClickerGameInActionScreen({Key? key = contentKey, required this.state}) : super(key: key);
 
   @override
   State<ClickerGameInActionScreen> createState() => _ClickerGameInActionScreenState();

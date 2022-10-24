@@ -12,9 +12,6 @@ Feature: Clicker sample 2e2 test
       Then Click to start button
       Then Click to counter 10 times
       Then Assert that game title is "Faster!"
-      Then Assert that number on screen is 10
-      Then Wait for the end of the game
-      Then Assert that result of game is 10 clicks
 
     Scenario: Medium result game
       When Welcome screen is on display

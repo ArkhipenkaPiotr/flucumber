@@ -12,8 +12,13 @@ class StepRunner {
   });
 
   Future runStep(FlucumberContext context) async {
+    await context.tester.pumpAndSettle();
     if (runnerFunction is Future Function()) {
-      await (runnerFunction as Function).call();
+      await runnerFunction.call();
     }
+    if (runnerFunction is Future Function(FlucumberContext)) {
+      await runnerFunction.call(context);
+    }
+    await context.tester.pumpAndSettle();
   }
 }

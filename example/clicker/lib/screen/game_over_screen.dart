@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameOverScreen extends StatelessWidget {
+  static const screenKey = Key('GameOverScreen');
+
   final GameResultsClickerState state;
 
-  const GameOverScreen({Key? key, required this.state}) : super(key: key);
+  const GameOverScreen({Key? key = screenKey, required this.state}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
