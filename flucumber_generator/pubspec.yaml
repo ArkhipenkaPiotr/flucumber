@@ -4,24 +4,17 @@ version: 0.0.1
 publish_to: none
 
 environment:
-  sdk: '>=2.17.6 <3.0.0'
-  flutter: ">=1.17.0"
+  sdk: '>=2.18.1 <3.0.0'
 
 dependencies:
   build:
   source_gen:
-  flutter:
-    sdk: flutter
-  integration_test:
-    sdk: flutter
-  flutter_test:
-    sdk: flutter
   path: ^1.8.1
   glob: ^2.1.0
+  flucumber_annotations:
+    path: ../flucumber_annotations
 
 dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner:
   build_test:
-
-flutter:

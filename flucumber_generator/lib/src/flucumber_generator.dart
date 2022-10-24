@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:flucumber_generator/flucumber_generator.dart';
+import 'package:flucumber_annotations/flucumber_annotations.dart';
 import 'package:flucumber_generator/src/steps_file_reference.dart';
 import 'package:glob/glob.dart';
 import 'package:path/path.dart';

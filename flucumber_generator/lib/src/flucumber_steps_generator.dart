@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:build/build.dart';
-import 'package:flucumber_generator/src/annotations.dart';
+import 'package:flucumber_annotations/flucumber_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 const TypeChecker _whenChecker = TypeChecker.fromRuntime(When);

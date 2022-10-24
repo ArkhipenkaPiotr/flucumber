@@ -1,4 +1,5 @@
 import 'package:flucumber/flucumber.dart';
+import 'package:integration_test/integration_test.dart';
 
 void runFlucumberIntegrationTests({
   required Function appMainFunction,
@@ -14,9 +15,7 @@ void runFlucumberIntegrationTests({
         .map((featureName) => allFeatures[featureName]!);
   }
 
-  print('Attempt to call main function');
-
-  for (final feature in features) {
-    feature.run();
+  for (final feature in allFeatures.values) {
+    feature.run(appMainFunction);
   }
 }
