@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:flucumber_annotations/flucumber_annotations.dart';
 import 'package:source_gen/source_gen.dart';
@@ -23,18 +24,43 @@ class FlucumberStepsGenerator extends Generator {
     }
     final resultMap = <String, String>{};
     for (final element in library.allElements) {
+      final annotation;
+
       if (_whenChecker.hasAnnotationOfExact(element)) {
-        final annotation = _whenChecker.firstAnnotationOf(element);
-        final definition = annotation!.getField('definition')!.toStringValue();
-        resultMap[_prepareDefinition(definition!)] = element.displayName;
+        annotation = _whenChecker.firstAnnotationOf(element);
+      } else if (_thenChecker.hasAnnotationOfExact(element)) {
+        annotation = _thenChecker.firstAnnotationOf(element);
+      } else {
+        break;
       }
-      if (_thenChecker.hasAnnotationOfExact(element)) {
-        final annotation = _thenChecker.firstAnnotationOf(element);
-        final definition = annotation!.getField('definition')!.toStringValue();
-        resultMap[_prepareDefinition(definition!)] = element.displayName;
-      }
+
+      _validateMethod(element);
+      final definition = annotation.getField('definition')!.toStringValue();
+      resultMap[_prepareDefinition(definition!)] = element.displayName;
     }
     return jsonEncode(resultMap);
+  }
+
+  void _validateMethod(Element element) {
+    if (element is! ExecutableElement) {
+      throw('${element.displayName} is not a method');
+    }
+
+    _checkIsMethodPublic(element);
+    _checkFirstParamIsContext(element);
+  }
+
+  void _checkIsMethodPublic(Element element) {
+    if (!element.isPublic) {
+      Exception('Method ${element.displayName} must be public');
+    }
+  }
+
+  void _checkFirstParamIsContext(ExecutableElement element) {
+    final firstParam = element.parameters.first;
+    if (firstParam.runtimeType.toString() != 'FlucumberContext') {
+      throw 'First parameter of ${element.displayName} must be a FlucumberContext';
+    }
   }
 
   String _prepareDefinition(String definition) {
@@ -46,4 +72,5 @@ class FlucumberStepsGenerator extends Generator {
     }
     return result;
   }
+
 }

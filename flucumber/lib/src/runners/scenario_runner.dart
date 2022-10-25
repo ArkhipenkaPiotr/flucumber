@@ -14,7 +14,6 @@ class ScenarioRunner {
     IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
     testWidgets(scenarioName, (tester) async {
-      print('Scenatio running');
       appMainFunction();
       final context = FlucumberContext(tester);
       for (final step in steps) {
