@@ -17,6 +17,8 @@ dependencies:
   flutter_test:
     sdk: flutter
   path: ^1.8.1
+  flucumber_annotations:
+    path: ../flucumber_annotations
 
 dev_dependencies:
   flutter_lints: ^2.0.0

@@ -63,7 +63,7 @@ class FlucumberStepsGenerator extends Generator {
 
   void _checkParamsCount(ExecutableElement element) {
     if (element.parameters.length > 10) {
-      throw 'Error in ${element.name} method\nMaximum numbers of parameters is 10';
+      throw 'Error in ${element.name} method\nMaximum numbers of parameters is 7';
     }
   }
 

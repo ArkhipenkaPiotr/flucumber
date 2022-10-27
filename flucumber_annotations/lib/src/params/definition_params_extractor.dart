@@ -1,4 +1,3 @@
-
 import 'package:flucumber_annotations/src/utils/string_utils.dart';
 
 import 'flucumber_parameter.dart';
@@ -20,6 +19,20 @@ class DefinitionParamsExtractor {
     final params = _getExpectedTypes(definition);
 
     return params.map((e) => e.parameter.dartType).toList();
+  }
+
+  List<dynamic> extractParams(String definition, String actualStep) {
+    dynamic extractParam(TypeAppearance appearance) {
+      final typeRegExp = RegExp(appearance.parameter.matcher);
+      final searchString = actualStep.substring(appearance.appearanceIndex);
+      final paramString = typeRegExp.stringMatch(searchString);
+
+      return appearance.parameter.fromString(paramString!);
+    }
+
+    final appearances = _getExpectedTypes(definition);
+
+    return appearances.map(extractParam).toList();
   }
 
   String definitionToRegexpFormat(String definition) {

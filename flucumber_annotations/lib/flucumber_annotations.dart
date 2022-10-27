@@ -4,3 +4,4 @@
 library flucumber_annotations;
 
 export 'src/annotations.dart';
+export 'src/params/definition_params_extractor.dart';
