@@ -3,7 +3,7 @@ import '../context/flucumber_context.dart';
 class StepRunner {
   final String actualStep;
   final String stepSource;
-  final dynamic runnerFunction;
+  final Function runnerFunction;
 
   StepRunner({
     required this.actualStep,

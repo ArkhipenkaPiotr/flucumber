@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:build/build.dart';
+import 'package:flucumber_annotations/src/params/definition_params_extractor.dart';
 
 class StepsFileMetadata {
   final String packageName;
@@ -36,8 +37,14 @@ class StepsFileMetadata {
   String get importString => "import '$filePath' as $filePseudonym;";
 
   StepMetadata? findStep(String stepName) {
-    final matchingRefs =
-        methodRefs.where((element) => RegExp(element.stepDefinition).hasMatch(stepName));
+    final extractor = DefinitionParamsExtractor();
+
+    final matchingRefs = methodRefs.where((element) {
+      final definition = extractor.definitionToRegexpFormat(element.stepDefinition);
+
+      // print('Matching $definition with $stepName');
+      return RegExp(definition).hasMatch(stepName);
+    });
     if (matchingRefs.isEmpty) return null;
 
     final firstMatchingStepMetadata = matchingRefs.first;

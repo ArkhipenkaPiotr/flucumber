@@ -1,29 +1,34 @@
-class FlucumberParameter {
-  static List<FlucumberParameter> allSupportedParams = [
-    FlucumberParameter(
+class FlucumberType {
+  static List<FlucumberType> allSupportedTypes = [
+    FlucumberType(
       name: '{int}',
       matcher: '[-0-9]+',
       dartType: int,
+      fromString: int.parse,
     ),
-    FlucumberParameter(
+    FlucumberType(
       name: '{double}',
       matcher: '[-.0-9]+',
       dartType: double,
+      fromString: double.parse,
     ),
-    FlucumberParameter(
+    FlucumberType(
       name: '{string}',
       matcher: '\\"(.*?)\\"',
       dartType: String,
+      fromString: (value) => value,
     ),
   ];
 
   final String name;
   final String matcher;
   final Type dartType;
+  final dynamic Function(String value) fromString;
 
-  FlucumberParameter({
+  FlucumberType({
     required this.name,
     required this.matcher,
     required this.dartType,
+    required this.fromString,
   });
 }
