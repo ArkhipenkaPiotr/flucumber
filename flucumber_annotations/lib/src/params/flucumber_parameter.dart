@@ -16,7 +16,7 @@ class FlucumberType {
       name: '{string}',
       matcher: '\\"(.*?)\\"',
       dartType: String,
-      fromString: (value) => value,
+      fromString: (value) => value.replaceAll('"', ''),
     ),
   ];
 

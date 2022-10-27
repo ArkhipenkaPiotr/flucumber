@@ -10,6 +10,12 @@ class ClickerGameInActionScreen extends StatefulWidget {
   @visibleForTesting
   static const contentKey = Key('ClickerGameInActionScreen');
 
+  @visibleForTesting
+  static const gameTitleKey = Key('ClickerGameInActionScreen.title');
+
+  @visibleForTesting
+  static const clickSpaceKey = Key('ClickerGameInActionScreen.clickSpace');
+
   final GameInActionClickerState state;
 
   const ClickerGameInActionScreen({Key? key = contentKey, required this.state}) : super(key: key);
@@ -46,6 +52,7 @@ class _ClickerGameInActionScreenState extends State<ClickerGameInActionScreen> {
                 flex: 1,
                 child: Text(
                   _getTitleByProgress(widget.state.progress),
+                  key: ClickerGameInActionScreen.gameTitleKey,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
@@ -57,9 +64,11 @@ class _ClickerGameInActionScreenState extends State<ClickerGameInActionScreen> {
               ),
               Text('Clicks: ${widget.state.clicks}'),
               const Spacer(),
-              _ClickSpace(onClick: () {
-                context.read<ClickerCubit>().processClick();
-              }),
+              _ClickSpace(
+                  key: ClickerGameInActionScreen.clickSpaceKey,
+                  onClick: () {
+                    context.read<ClickerCubit>().processClick();
+                  }),
               const Spacer(),
             ],
           ),
