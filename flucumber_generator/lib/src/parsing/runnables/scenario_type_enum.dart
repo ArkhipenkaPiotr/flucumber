@@ -1,0 +1,1 @@
+enum ScenarioType { scenario, scenarioOutline }

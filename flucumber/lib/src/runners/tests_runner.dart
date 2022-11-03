@@ -1,21 +1,21 @@
 import 'package:flucumber/flucumber.dart';
+import 'package:flucumber/src/runners/feature_file_runner.dart';
 import 'package:integration_test/integration_test.dart';
 
 void runFlucumberIntegrationTests({
   required Function appMainFunction,
-  required Map<String, FeatureRunner> allFeatures,
-  List<String> featuresToRun = const [],
+  required List<FeatureFileRunner> featureFiles,
+  List<String> filesToRun = const [],
 }) {
-  final Iterable<FeatureRunner> features;
-  if (featuresToRun.isEmpty) {
-    features = allFeatures.values;
+  final Iterable<FeatureFileRunner> featureFilesToRun;
+  if (featureFiles.isEmpty) {
+    featureFilesToRun = featureFiles;
   } else {
-    features = allFeatures.keys
-        .where((featureName) => featuresToRun.contains(featureName))
-        .map((featureName) => allFeatures[featureName]!);
+    featureFilesToRun =
+        featureFiles.where((featureName) => filesToRun.contains(featureName.fileName));
   }
 
-  for (final feature in allFeatures.values) {
+  for (final feature in featureFilesToRun) {
     feature.run(appMainFunction);
   }
 }
