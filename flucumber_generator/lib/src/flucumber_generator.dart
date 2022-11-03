@@ -64,11 +64,8 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
     final languageService = LanguageService()..initialise();
 
     final featureContent = File(file.path).readAsStringSync();
-    print('Feature file generation');
     final featureFile = await parser.parseFeatureFile(featureContent, file.path, languageService);
-    print('Feature file parsed');
     final generator = FeatureFileGenerator(featureFile);
-    print('Feature file generated');
 
     resultBuffer.writeln(generator.generate(_stepsFileMetadatas));
   }

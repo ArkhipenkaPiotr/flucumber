@@ -47,7 +47,6 @@ class StepsDefinitionFileMetadata {
     final matchingRefs = methodRefs.where((element) {
       final definition = extractor.definitionToRegexpFormat(element.stepDefinition);
 
-      // print('Matching $definition with $stepName');
       return RegExp(definition).hasMatch(stepName);
     });
     if (matchingRefs.isEmpty) return null;
