@@ -3,20 +3,20 @@ import 'dart:convert';
 import 'package:build/build.dart';
 import 'package:flucumber_annotations/src/params/definition_params_extractor.dart';
 
-class StepsFileMetadata {
+class StepsDefinitionFileMetadata {
   final String packageName;
   final String filePath;
   final String filePseudonym;
   final List<StepMetadata> methodRefs;
 
-  StepsFileMetadata._({
+  StepsDefinitionFileMetadata._({
     required this.packageName,
     required this.filePath,
     required this.methodRefs,
     required this.filePseudonym,
   });
 
-  static Future<StepsFileMetadata> fromAssetId(BuildStep buildStep, AssetId id) async {
+  static Future<StepsDefinitionFileMetadata> fromAssetId(BuildStep buildStep, AssetId id) async {
     final packageName = id.package;
     final filePath =
         id.path.replaceAll('integration_test/', '').replaceAll('.flucumber_steps.json', '.dart');
@@ -24,13 +24,18 @@ class StepsFileMetadata {
 
     final content = await buildStep.readAsString(id);
     final contentMap = jsonDecode(content) as Map<String, dynamic>;
-    final refs = contentMap.keys
-        .map(
-          (e) => StepMetadata(stepDefinition: e, stepMethodName: contentMap[e]!),
-        )
-        .toList();
+    final refs = contentMap.keys.map(
+      (e) {
+        final methodName = contentMap[e];
+        final methodReference = '$pseudonym.$methodName';
+        return StepMetadata(
+          stepDefinition: e,
+          stepMethodReference: methodReference,
+        );
+      },
+    ).toList();
 
-    return StepsFileMetadata._(
+    return StepsDefinitionFileMetadata._(
         packageName: packageName, filePath: filePath, methodRefs: refs, filePseudonym: pseudonym);
   }
 
@@ -52,16 +57,16 @@ class StepsFileMetadata {
   }
 
   String getMethodReferenceToStep(StepMetadata stepMetadata) {
-    return '$filePseudonym.${stepMetadata.stepMethodName}';
+    return '$filePseudonym.${stepMetadata.stepMethodReference}';
   }
 }
 
 class StepMetadata {
   final String stepDefinition;
-  final String stepMethodName;
+  final String stepMethodReference;
 
   StepMetadata({
     required this.stepDefinition,
-    required this.stepMethodName,
+    required this.stepMethodReference,
   });
 }

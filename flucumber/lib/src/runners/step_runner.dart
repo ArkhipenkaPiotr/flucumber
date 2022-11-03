@@ -4,7 +4,7 @@ import '../context/flucumber_context.dart';
 
 class StepRunner {
   final String actualStep;
-  final String stepSource;
+  final String stepDefinition;
   final Function runnerFunction;
 
   final _paramsExtractor = DefinitionParamsExtractor();
@@ -12,7 +12,7 @@ class StepRunner {
   StepRunner({
     required this.actualStep,
     required this.runnerFunction,
-    required this.stepSource,
+    required this.stepDefinition,
   });
 
   Future runStep(FlucumberContext context) async {
@@ -29,7 +29,7 @@ class StepRunner {
       return;
     }
 
-    final params = _paramsExtractor.extractParams(stepSource, actualStep);
+    final params = _paramsExtractor.extractParams(stepDefinition, actualStep);
 
     switch (params.length) {
       case 0:

@@ -3,13 +3,16 @@ import 'dart:io';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:flucumber_annotations/flucumber_annotations.dart';
+import 'package:flucumber_generator/src/config_snippet_generator/feature_file_generator.dart';
+import 'package:flucumber_generator/src/parsing/languages/language_service.dart';
+import 'package:flucumber_generator/src/parsing/parser.dart';
 import 'package:flucumber_generator/src/steps_file_reference.dart';
 import 'package:glob/glob.dart';
 import 'package:path/path.dart';
 import 'package:source_gen/source_gen.dart';
 
 class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
-  final List<StepsFileMetadata> _stepsFileMetadatas = [];
+  final List<StepsDefinitionFileMetadata> _stepsFileMetadatas = [];
 
   @override
   generateForAnnotatedElement(
@@ -21,105 +24,52 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
     result.writeln("import 'package:flucumber/flucumber.dart';");
 
     await for (final id in ids) {
-      final stepsFileReference = await StepsFileMetadata.fromAssetId(buildStep, id);
+      final stepsFileReference = await StepsDefinitionFileMetadata.fromAssetId(buildStep, id);
       result.writeln(stepsFileReference.importString);
       _stepsFileMetadatas.add(stepsFileReference);
     }
 
     result.writeln(
-        'void runIntegrationTests(Function appMainFunction, [List<String> featuresToRun = const []]) {');
+        'void runIntegrationTests(Function appMainFunction, [List<String> filesToRun = const []]) {');
     result.writeln(
-        'runFlucumberIntegrationTests(appMainFunction: appMainFunction, allFeatures: _features, featuresToRun: featuresToRun);');
+        'runFlucumberIntegrationTests(appMainFunction: appMainFunction, featureFiles: _featureFiles, filesToRun: filesToRun,);');
     result.writeln('}\n');
 
-    _generateFeatures(result, annotation);
+    await _generateFeatures(result, annotation);
 
     return result.toString();
   }
 
-  void _generateFeatures(StringBuffer resultBuffer, ConstantReader annotation) {
+  Future _generateFeatures(StringBuffer resultBuffer, ConstantReader annotation) async {
     final featuresPath = annotation.read('scenariosPath').stringValue;
     final directory = Directory(featuresPath);
     if (!directory.existsSync()) {
       throw Exception("Directory ${directory.absolute.path} doesn't exist");
     }
 
-    resultBuffer.writeln('final _features = {');
-    directory.listSync(recursive: true).forEach((element) {
-      final fileExtension = extension(element.path);
+    resultBuffer.writeln('final _featureFiles = <FeatureFileRunner>[');
+
+    await for (final file in directory.list(recursive: true)) {
+      final fileExtension = extension(file.path);
       if (fileExtension == '.feature') {
-        _generateFeature(resultBuffer, element);
+        await _generateFeatureFile(resultBuffer, file);
       }
-    });
-    resultBuffer.writeln('};');
+    }
+
+    resultBuffer.writeln('];');
   }
 
-  void _generateFeature(StringBuffer resultBuffer, FileSystemEntity file) {
-    final featureFileName = basenameWithoutExtension(file.path);
+  Future _generateFeatureFile(StringBuffer resultBuffer, FileSystemEntity file) async {
+    final parser = GherkinParser();
+    final languageService = LanguageService()..initialise();
+
     final featureContent = File(file.path).readAsStringSync();
-    final featureName = featureContent
-        .split('\n')
-        .firstWhere((element) => element.contains('Feature:'))
-        .replaceFirst('Feature:', '')
-        .trim();
+    print('Feature file generation');
+    final featureFile = await parser.parseFeatureFile(featureContent, file.path, languageService);
+    print('Feature file parsed');
+    final generator = FeatureFileGenerator(featureFile);
+    print('Feature file generated');
 
-    resultBuffer.writeln("'$featureFileName': FeatureRunner(");
-    resultBuffer.writeln("name: '$featureName',");
-    resultBuffer.writeln("scenarios: [");
-    _generateScenarios(resultBuffer, featureContent);
-    resultBuffer.writeln("],");
-    resultBuffer.writeln("),");
-  }
-
-  void _generateScenarios(StringBuffer resultBuffer, String featureContent) {
-    final scenarios = featureContent.split('Scenario:')..removeAt(0);
-    for (final scenario in scenarios) {
-      _generateScenario(resultBuffer, scenario);
-    }
-  }
-
-  void _generateScenario(StringBuffer resultBuffer, String scenarioContent) {
-    final scenarioName = scenarioContent.split('\n').first.trim();
-    resultBuffer.writeln('ScenarioRunner(');
-    resultBuffer.writeln("scenarioName: '$scenarioName',");
-    resultBuffer.writeln("steps: [");
-    _generateSteps(resultBuffer, scenarioContent);
-    resultBuffer.writeln("],");
-    resultBuffer.writeln('),');
-  }
-
-  void _generateSteps(StringBuffer resultBuffer, String scenarioContent) {
-    scenarioContent
-        .split('\n')
-        .where((element) => element.contains('When') || element.contains('Then'))
-        .forEach((element) {
-      _generateStep(resultBuffer, element);
-    });
-  }
-
-  void _generateStep(StringBuffer resultBuffer, String stepContent) {
-    final step = stepContent.replaceFirst('When', '').replaceFirst('Then', '').trim();
-
-    StepsFileMetadata? accordingStepsFile;
-    StepMetadata? accordingStep;
-    for (final stepsFile in _stepsFileMetadatas) {
-      final methodReference = stepsFile.findStep(step);
-      if (methodReference != null) {
-        accordingStepsFile = stepsFile;
-        accordingStep = methodReference;
-        break;
-      }
-    }
-    if (accordingStepsFile == null || accordingStep == null) {
-      throw Exception(
-          'Method reference for $step step is not found. \n Check is your step has according method');
-    }
-    final methodReference = accordingStepsFile.getMethodReferenceToStep(accordingStep);
-
-    resultBuffer.writeln('StepRunner(');
-    resultBuffer.writeln("actualStep: '$step',");
-    resultBuffer.writeln("stepSource: '${accordingStep.stepDefinition}',");
-    resultBuffer.writeln("runnerFunction: $methodReference,");
-    resultBuffer.writeln("),");
+    resultBuffer.writeln(generator.generate(_stepsFileMetadatas));
   }
 }

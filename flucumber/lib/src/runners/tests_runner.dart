@@ -8,7 +8,7 @@ void runFlucumberIntegrationTests({
   List<String> filesToRun = const [],
 }) {
   final Iterable<FeatureFileRunner> featureFilesToRun;
-  if (featureFiles.isEmpty) {
+  if (filesToRun.isEmpty) {
     featureFilesToRun = featureFiles;
   } else {
     featureFilesToRun =
