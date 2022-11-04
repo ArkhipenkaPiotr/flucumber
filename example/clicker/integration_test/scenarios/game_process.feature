@@ -1,35 +1,40 @@
 Feature: Clicker game process
+
   Background: Clicker app is open
 
+  # Low result game is game with 20 or less clicks
   Scenario: Low result game
-    When Welcome screen is on display
+    Given Welcome screen is on display
     Then Click to start button
-    Then Click to counter 10 times
-    Then Assert that game title is "Faster!"
+    And Click to counter 10 times
+    And Assert that game title is "Faster!"
 
+    # Medium game is game with clicks more then 20 but less then 50
   Scenario: Medium result game
-    When Welcome screen is on display
-    Then Click to start button
+    Given Welcome screen is on display
+    When Click to start button
     Then Click to counter 21 times
-    Then Assert that game title is "More faster!"
-    Then Assert that number on screen is 21
+    And Assert that game title is "More faster!"
+    And Assert that number on screen is 21
     Then Wait for the end of the game
-    Then Assert that result of game is 21 clicks
+    But Assert that result of game is 21 clicks
 
+  # Good game is game with clicks more then 50 but less then 70
   Scenario: Good result game
-    When Welcome screen is on display
-    Then Click to start button
+    Given Welcome screen is on display
+    When Click to start button
     Then Click to counter 51 times
-    Then Assert that game title is "Good work!"
-    Then Assert that number on screen is 51
+    And Assert that game title is "Good work!"
+    And Assert that number on screen is 51
     Then Wait for the end of the game
-    Then Assert that result of game is 51 clicks
+    But Assert that result of game is 51 clicks
 
+    # Excellent game is game with more then 70 clicks
   Scenario: Excellent result game
-    When Welcome screen is on display
-    Then Click to start button
+    Given Welcome screen is on display
+    When Click to start button
     Then Click to counter 71 times
-    Then Assert that game title is "MONSTER! ARE YOU A BOT??"
-    Then Assert that number on screen is 71
+    * Assert that game title is "MONSTER! ARE YOU A BOT??"
+    * Assert that number on screen is 71
     Then Wait for the end of the game
-    Then Assert that result of game is 71 clicks
+    But Assert that result of game is 71 clicks

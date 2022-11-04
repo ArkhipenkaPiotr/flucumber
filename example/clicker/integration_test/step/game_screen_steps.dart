@@ -10,13 +10,13 @@ Future assertThatGameIsStarted(FlucumberContext context) async {
   expect(find.byType(ClickerGameInActionScreen).hitTestable(), findsOneWidget);
 }
 
-@Then('Assert that game title is {string}')
+@And('Assert that game title is {string}')
 Future assertThatGameTitleIs(FlucumberContext context, String title) async {
   final widget = find.byKey(ClickerGameInActionScreen.gameTitleKey).evaluate().first.widget as Text;
   expect(widget.data, equals(title));
 }
 
-@Then('Click to counter {int} times')
+@And('Click to counter {int} times')
 Future clickToCounterNTimes(FlucumberContext context, int times) async {
   for (var i = 0; i < times; i++) {
     final finder = find.byKey(ClickerGameInActionScreen.clickSpaceKey).hitTestable();
@@ -25,7 +25,7 @@ Future clickToCounterNTimes(FlucumberContext context, int times) async {
   }
 }
 
-@Then('Assert that number on screen is {int}')
+@And('Assert that number on screen is {int}')
 Future assertThanNumberOnScreenIsN(FlucumberContext context, int times) async {
   expect(find.text('Clicks: $times'), findsOneWidget);
 }

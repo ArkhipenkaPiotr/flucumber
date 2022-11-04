@@ -1,17 +1,27 @@
 class FlucumberStep {
-  const FlucumberStep();
-}
-
-class When {
   final String definition;
 
-  const When(this.definition);
+  const FlucumberStep(this.definition);
 }
 
-class Then {
-  final String definition;
+class When extends FlucumberStep {
+  const When(String definition) : super(definition);
+}
 
-  const Then(this.definition);
+class Then extends FlucumberStep {
+  const Then(String definition) : super(definition);
+}
+
+class Given extends FlucumberStep {
+  const Given(String definition) : super(definition);
+}
+
+class And extends FlucumberStep {
+  const And(String definition) : super(definition);
+}
+
+class But extends FlucumberStep {
+  const But(String definition) : super(definition);
 }
 
 class Flucumber {

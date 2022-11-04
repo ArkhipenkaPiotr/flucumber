@@ -8,15 +8,13 @@ import 'package:flucumber_annotations/flucumber_annotations.dart';
 import 'package:flucumber_annotations/src/params/definition_params_extractor.dart';
 import 'package:source_gen/source_gen.dart';
 
-const TypeChecker _whenChecker = TypeChecker.fromRuntime(When);
-const TypeChecker _thenChecker = TypeChecker.fromRuntime(Then);
+const TypeChecker _stepChecker = TypeChecker.fromRuntime(FlucumberStep);
 
 class FlucumberStepsGenerator extends Generator {
   @override
   FutureOr<String?> generate(LibraryReader library, BuildStep buildStep) async {
     final annotatedElements = [
-      ...library.annotatedWithExact(_whenChecker),
-      ...library.annotatedWithExact(_thenChecker),
+      ...library.annotatedWith(_stepChecker),
     ];
 
     if (annotatedElements.isEmpty) return null;
@@ -28,9 +26,7 @@ class FlucumberStepsGenerator extends Generator {
 
       _validateMethod(element);
 
-      final definition = annotation
-          .read('definition')
-          .stringValue;
+      final definition = annotation.read('definition').stringValue;
       _checkParametersMatching(element as ExecutableElement, definition);
 
       resultMap[definition] = element.displayName;
