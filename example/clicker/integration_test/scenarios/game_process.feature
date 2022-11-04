@@ -1,18 +1,16 @@
 Feature: Clicker game process
 
-  Background: Clicker app is open
+  Background: Clicker game has started
+    Given Welcome screen is on display
+    Then Click to start button
 
   # Low result game is game with 20 or less clicks
   Scenario: Low result game
-    Given Welcome screen is on display
-    Then Click to start button
     And Click to counter 10 times
     And Assert that game title is "Faster!"
 
     # Medium game is game with clicks more then 20 but less then 50
   Scenario: Medium result game
-    Given Welcome screen is on display
-    When Click to start button
     Then Click to counter 21 times
     And Assert that game title is "More faster!"
     And Assert that number on screen is 21
@@ -21,8 +19,6 @@ Feature: Clicker game process
 
   # Good game is game with clicks more then 50 but less then 70
   Scenario: Good result game
-    Given Welcome screen is on display
-    When Click to start button
     Then Click to counter 51 times
     And Assert that game title is "Good work!"
     And Assert that number on screen is 51
@@ -31,8 +27,6 @@ Feature: Clicker game process
 
     # Excellent game is game with more then 70 clicks
   Scenario: Excellent result game
-    Given Welcome screen is on display
-    When Click to start button
     Then Click to counter 71 times
     * Assert that game title is "MONSTER! ARE YOU A BOT??"
     * Assert that number on screen is 71
