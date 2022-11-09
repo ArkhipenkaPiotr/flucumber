@@ -1,6 +1,6 @@
 #language: ru
 #noinspection NonAsciiCharacters
-Функциональность: Clicker game start
+Функциональность: Старт игры
 
   Сценарий: Запуск игры
     Когда Приветственный экран открыт

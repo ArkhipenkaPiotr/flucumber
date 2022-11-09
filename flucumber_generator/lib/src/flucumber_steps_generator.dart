@@ -6,6 +6,7 @@ import 'package:build/build.dart';
 import 'package:collection/collection.dart';
 import 'package:flucumber_annotations/flucumber_annotations.dart';
 import 'package:flucumber_annotations/src/params/definition_params_extractor.dart';
+import 'package:flucumber_generator/src/utils/library_extensions.dart';
 import 'package:source_gen/source_gen.dart';
 
 const TypeChecker _stepChecker = TypeChecker.fromRuntime(FlucumberStep);
@@ -13,9 +14,7 @@ const TypeChecker _stepChecker = TypeChecker.fromRuntime(FlucumberStep);
 class FlucumberStepsGenerator extends Generator {
   @override
   FutureOr<String?> generate(LibraryReader library, BuildStep buildStep) async {
-    final annotatedElements = [
-      ...library.annotatedWith(_stepChecker),
-    ];
+    final annotatedElements = library.allAnnotatedWith(_stepChecker);
 
     if (annotatedElements.isEmpty) return null;
 
