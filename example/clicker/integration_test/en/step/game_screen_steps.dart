@@ -5,12 +5,12 @@ import 'package:flucumber_annotations/flucumber_annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-@Then('Assert that game is started')
+@Then('Make sure that game is started')
 Future assertThatGameIsStarted(FlucumberContext context) async {
   expect(find.byType(ClickerGameInActionScreen).hitTestable(), findsOneWidget);
 }
 
-@And('Assert that game title is {string}')
+@And('Make sure that game title is {string}')
 Future assertThatGameTitleIs(FlucumberContext context, String title) async {
   final widget = find.byKey(ClickerGameInActionScreen.gameTitleKey).evaluate().first.widget as Text;
   expect(widget.data, equals(title));
@@ -25,7 +25,7 @@ Future clickToCounterNTimes(FlucumberContext context, int times) async {
   }
 }
 
-@And('Assert that number on screen is {int}')
+@And('Make sure that number on screen is {int}')
 Future assertThanNumberOnScreenIsN(FlucumberContext context, int times) async {
   expect(find.text('Clicks: $times'), findsOneWidget);
 }

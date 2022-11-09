@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:build/build.dart';
 import 'package:flucumber_annotations/src/params/definition_params_extractor.dart';
+import 'package:path/path.dart' as path;
 
 class StepsDefinitionFileMetadata {
   final String packageName;
@@ -16,13 +17,19 @@ class StepsDefinitionFileMetadata {
     required this.filePseudonym,
   });
 
-  static Future<StepsDefinitionFileMetadata> fromAssetId(BuildStep buildStep, AssetId id) async {
-    final packageName = id.package;
-    final filePath =
-        id.path.replaceAll('integration_test/', '').replaceAll('.flucumber_steps.json', '.dart');
-    final pseudonym = filePath.replaceAll('.dart', '').replaceAll('/', '_');
+  static Future<StepsDefinitionFileMetadata> fromAssetId(
+      BuildStep buildStep, AssetId stepsDefinitionFileId, Uri annotatedFilePathUri) async {
+    final packageName = stepsDefinitionFileId.package;
 
-    final content = await buildStep.readAsString(id);
+    final stepsFilePath = path
+        .relative(stepsDefinitionFileId.uri.path, from: annotatedFilePathUri.path)
+        .replaceFirst('../', '')
+        .replaceAll('.flucumber_steps.json', '.dart');
+
+    final pseudonym =
+        stepsFilePath.replaceAll('../', '').replaceAll('.dart', '').replaceAll('/', '_');
+
+    final content = await buildStep.readAsString(stepsDefinitionFileId);
     final contentMap = jsonDecode(content) as Map<String, dynamic>;
     final refs = contentMap.keys.map(
       (e) {
@@ -36,7 +43,10 @@ class StepsDefinitionFileMetadata {
     ).toList();
 
     return StepsDefinitionFileMetadata._(
-        packageName: packageName, filePath: filePath, methodRefs: refs, filePseudonym: pseudonym);
+        packageName: packageName,
+        filePath: stepsFilePath,
+        methodRefs: refs,
+        filePseudonym: pseudonym);
   }
 
   String get importString => "import '$filePath' as $filePseudonym;";

@@ -1,6 +1,6 @@
 import 'package:flucumber_annotations/src/utils/string_utils.dart';
 
-import 'flucumber_parameter.dart';
+import 'flucumber_type.dart';
 
 class DefinitionParamsExtractor {
   List<TypeAppearance> _getExpectedTypes(String definition) {
@@ -50,4 +50,9 @@ class TypeAppearance {
   final int appearanceIndex;
 
   TypeAppearance(this.parameter, this.appearanceIndex);
+
+  @override
+  String toString() {
+    return 'TypeAppearance{parameter: $parameter, appearanceIndex: $appearanceIndex}';
+  }
 }

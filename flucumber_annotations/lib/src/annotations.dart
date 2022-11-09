@@ -26,6 +26,10 @@ class But extends FlucumberStep {
 
 class Flucumber {
   final String scenariosPath;
+  final String language;
 
-  const Flucumber({required this.scenariosPath});
+  const Flucumber({
+    required this.scenariosPath,
+    this.language = 'en',
+  });
 }
