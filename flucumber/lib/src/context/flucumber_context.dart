@@ -6,7 +6,7 @@ class FlucumberContext {
 
   FlucumberContext(this.tester);
 
-  void save(String key, String value) {
+  void save(String key, dynamic value) {
     _storage[key] = value;
   }
 

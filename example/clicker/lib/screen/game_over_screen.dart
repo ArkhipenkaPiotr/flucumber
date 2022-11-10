@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameOverScreen extends StatelessWidget {
   static const screenKey = Key('GameOverScreen');
+  @visibleForTesting
+  static const restartGameButtonKey = Key('GameOverScreen.restartGame');
 
   final GameResultsClickerState state;
 
@@ -30,6 +32,7 @@ class GameOverScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge),
               const Spacer(),
               ElevatedButton(
+                  key: restartGameButtonKey,
                   onPressed: () {
                     context.read<ClickerCubit>().startGame();
                   },

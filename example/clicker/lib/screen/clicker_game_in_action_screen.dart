@@ -26,7 +26,7 @@ class ClickerGameInActionScreen extends StatefulWidget {
 
 class _ClickerGameInActionScreenState extends State<ClickerGameInActionScreen> {
   static const _tickPeriodMillis = 1;
-  static const _timeOutMillis = 15 * 1000;
+  static const _timeOutMillis = 5 * 1000;
 
   late final Timer _timer;
 
