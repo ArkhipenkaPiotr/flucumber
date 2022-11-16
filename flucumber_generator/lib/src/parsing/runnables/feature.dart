@@ -35,8 +35,10 @@ class FeatureRunnable extends TaggableRunnableBlock {
       case ScenarioRunnable:
       case ScenarioOutlineRunnable:
         Iterable<ScenarioRunnable> childScenarios = [child as ScenarioRunnable];
-        if (child is ScenarioOutlineRunnable) {
-          childScenarios = child.expandOutlinesIntoScenarios();
+        if (child is ScenarioOutlineRunnable && child.examples.isEmpty) {
+          throw GherkinSyntaxException(
+            'Scenario outline `$name` does not contains an example block.',
+          );
         }
 
         scenarios.addAll(childScenarios);

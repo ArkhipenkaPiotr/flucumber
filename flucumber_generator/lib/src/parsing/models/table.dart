@@ -11,15 +11,6 @@ class GherkinTable {
     this.header,
   );
 
-  void setStepParameter(
-    String parameterName,
-    String value,
-  ) {
-    for (final row in rows) {
-      row.setStepParameter(parameterName, value);
-    }
-  }
-
   /// Returns the table as a iterable of maps.  With a single map representing a row in the table
   /// keyed by the column name if a header row is present else the column index (as a string)
   Iterable<Map<String, String?>> asMap() {

@@ -92,51 +92,50 @@ class GherkinParser {
       ///
       /// This is a subpar solution and would be a good candidate to refactor
       if (matcher is TagSyntax) {
-        matcher.annotating =
-            TagSyntax.determineAnnotationBlock(lines.elementAt(i + 1), dialect);
+        matcher.annotating = TagSyntax.determineAnnotationBlock(lines.elementAt(i + 1), dialect);
       }
 
-      if (matcher != null) {
-        // end look ahead here???
-        if (parentSyntaxBlock.hasBlockEnded(matcher)) {
-          switch (parentSyntaxBlock.endBlockHandling(matcher)) {
-            case EndBlockHandling.ignore:
-              return i;
-            case EndBlockHandling.continueProcessing:
-              return i - 1;
-          }
-        }
-
-        final useUntrimmedLines = matcher is MultilineStringSyntax ||
-            parentBlock is MultilineStringRunnable;
-        final runnable = matcher.toRunnable(
-          useUntrimmedLines ? lines.elementAt(i) : line,
-          parentBlock.debug.copyWith(lineNumber: i, lineText: line),
-          dialect,
-        );
-
-        if (runnable is DialectBlock) {
-          // ignore: parameter_assignments
-          dialect = runnable.getDialect(languageService);
-        }
-
-        if (runnable is RunnableBlock) {
-          i = _parseBlock(
-            languageService,
-            dialect,
-            matcher,
-            runnable,
-            lines,
-            i + 1,
-          );
-        }
-
-        parentBlock.addChild(runnable);
-      } else {
+      if (matcher == null) {
         throw GherkinSyntaxException(
           "Unknown or un-implemented syntax: '$line', file: '${parentBlock.debug.filePath}",
         );
       }
+
+      if (parentSyntaxBlock.hasBlockEnded(matcher)) {
+        switch (parentSyntaxBlock.endBlockHandling(matcher)) {
+          case EndBlockHandling.ignore:
+            return i;
+          case EndBlockHandling.continueProcessing:
+            return i - 1;
+        }
+      }
+
+      final useUntrimmedLines =
+          matcher is MultilineStringSyntax || parentBlock is MultilineStringRunnable;
+
+      final runnable = matcher.toRunnable(
+        useUntrimmedLines ? lines.elementAt(i) : line,
+        parentBlock.debug.copyWith(lineNumber: i, lineText: line),
+        dialect,
+      );
+
+      if (runnable is DialectBlock) {
+        // ignore: parameter_assignments
+        dialect = runnable.getDialect(languageService);
+      }
+
+      if (runnable is RunnableBlock) {
+        i = _parseBlock(
+          languageService,
+          dialect,
+          matcher,
+          runnable,
+          lines,
+          i + 1,
+        );
+      }
+
+      parentBlock.addChild(runnable);
     }
 
     return lines.length;

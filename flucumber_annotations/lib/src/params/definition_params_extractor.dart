@@ -38,7 +38,10 @@ class DefinitionParamsExtractor {
   String definitionToRegexpFormat(String definition) {
     String resultString = definition;
     for (final param in FlucumberType.allSupportedTypes) {
-      resultString = resultString.replaceAll(param.name, param.matcher);
+      final paramInRegExpFormat = param.matcher;
+      const tableParamRegExp = '<.*>';
+
+      resultString = resultString.replaceAll(param.name, '($paramInRegExpFormat|$tableParamRegExp)');
     }
 
     return resultString;

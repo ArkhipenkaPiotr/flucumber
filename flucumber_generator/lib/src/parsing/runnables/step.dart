@@ -40,15 +40,6 @@ class StepRunnable extends RunnableBlock {
     }
   }
 
-  void setStepParameter(String parameterName, String value) {
-    _name = _name.replaceAll('<$parameterName>', value);
-    table?.setStepParameter(parameterName, value);
-    debug = debug.copyWith(
-      lineNumber: debug.lineNumber,
-      lineText: debug.lineText.replaceAll('<$parameterName>', value),
-    );
-  }
-
   StepRunnable clone() {
     final cloned = StepRunnable(_name, debug);
     cloned.multilineStrings = multilineStrings.map((s) => s).toList();
