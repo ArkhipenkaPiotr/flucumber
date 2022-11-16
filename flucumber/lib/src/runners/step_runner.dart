@@ -1,6 +1,7 @@
 import 'package:flucumber_annotations/flucumber_annotations.dart';
 
 import '../context/flucumber_context.dart';
+import '../model/example_value.dart';
 
 class StepRunner {
   final String actualStep;
@@ -15,19 +16,29 @@ class StepRunner {
     required this.stepDefinition,
   });
 
-  Future runStep(FlucumberContext context) async {
+  Future runStep(FlucumberContext context, [List<ExampleValue>? exampleValues]) async {
     await context.tester.pumpAndSettle();
 
-    await invokeRunnerFunction(context);
+    await invokeRunnerFunction(context, exampleValues ?? []);
 
     await context.tester.pumpAndSettle();
   }
 
-  Future invokeRunnerFunction(FlucumberContext context) async {
+  String _replaceExampleVariablesWithValues(List<ExampleValue> exampleValues) {
+    String result = actualStep;
+    for (final exampleValue in exampleValues) {
+      result = result.replaceAll('<${exampleValue.variableName}>', exampleValue.variableValue);
+    }
+    return result;
+  }
+
+  Future invokeRunnerFunction(FlucumberContext context, List<ExampleValue> exampleValues) async {
     if (runnerFunction is Future Function()) {
       await runnerFunction();
       return;
     }
+
+    final actualStep = _replaceExampleVariablesWithValues(exampleValues);
 
     final params = _paramsExtractor.extractParams(stepDefinition, actualStep);
 

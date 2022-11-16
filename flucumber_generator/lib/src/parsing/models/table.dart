@@ -11,6 +11,8 @@ class GherkinTable {
     this.header,
   );
 
+  int get variablesLength => rows.first.columns.length;
+
   /// Returns the table as a iterable of maps.  With a single map representing a row in the table
   /// keyed by the column name if a header row is present else the column index (as a string)
   Iterable<Map<String, String?>> asMap() {

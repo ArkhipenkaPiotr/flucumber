@@ -12,7 +12,7 @@ class BackgroundRunner {
 
   Future runBackground(Function appMainFunction, FlucumberContext context) async {
     for (final step in steps) {
-      await step.runStep(context);
+      await step.runStep(context, []);
     }
   }
 }
