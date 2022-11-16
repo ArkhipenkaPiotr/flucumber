@@ -83,7 +83,6 @@ class GherkinParser {
   ) {
     for (var i = lineNumber; i < lines.length; i += 1) {
       final line = lines.elementAt(i).trim();
-      // print("$line");
       final matcher = syntaxMatchers.firstWhereOrNull(
         (matcher) => matcher.isMatch(line, dialect),
       );
