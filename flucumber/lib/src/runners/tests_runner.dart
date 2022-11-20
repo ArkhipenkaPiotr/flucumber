@@ -1,6 +1,5 @@
 import 'package:flucumber/flucumber.dart';
 import 'package:flucumber/src/runners/feature_file_runner.dart';
-import 'package:integration_test/integration_test.dart';
 
 void runFlucumberIntegrationTests({
   required Function appMainFunction,
