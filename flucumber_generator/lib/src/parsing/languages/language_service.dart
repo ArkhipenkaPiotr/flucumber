@@ -22,10 +22,6 @@ class LanguageService {
 
   void initialise([String defaultLanguage = 'en']) {
     _defaultLanguage = defaultLanguage;
-    // final uri = Uri.file('dialects/languages.json');
-    // final langFile = File.fromUri(uri);
-    // Map<String, dynamic> languagesJson =
-    //     json.decode(langFile.readAsStringSync());
     kLanguagesJson.forEach((key, values) {
       final dialect =
           GherkinDialect.fromJson(values as Map<String, dynamic>).copyWith(

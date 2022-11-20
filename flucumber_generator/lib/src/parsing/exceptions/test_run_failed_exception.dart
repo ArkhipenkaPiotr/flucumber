@@ -1,1 +1,0 @@
-class GherkinTestRunFailedException implements Exception {}

@@ -7,7 +7,7 @@ import 'runnable_block.dart';
 import 'table.dart';
 
 class StepRunnable extends RunnableBlock {
-  String _name;
+  final String _name;
   String? description;
   GherkinTable? table;
   List<String> multilineStrings = <String>[];
@@ -38,13 +38,5 @@ class StepRunnable extends RunnableBlock {
           "Unknown runnable child given to Step '${child.runtimeType}'",
         );
     }
-  }
-
-  StepRunnable clone() {
-    final cloned = StepRunnable(_name, debug);
-    cloned.multilineStrings = multilineStrings.map((s) => s).toList();
-    cloned.table = table?.clone();
-
-    return cloned;
   }
 }
