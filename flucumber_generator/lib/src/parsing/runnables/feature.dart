@@ -34,7 +34,7 @@ class FeatureRunnable extends TaggableRunnableBlock {
         break;
       case ScenarioRunnable:
       case ScenarioOutlineRunnable:
-        Iterable<ScenarioRunnable> childScenarios = [child as ScenarioRunnable];
+        final childScenarios = [child as ScenarioRunnable];
         if (child is ScenarioOutlineRunnable && child.examples.isEmpty) {
           throw GherkinSyntaxException(
             'Scenario outline `$name` does not contains an example block.',
@@ -44,7 +44,9 @@ class FeatureRunnable extends TaggableRunnableBlock {
         scenarios.addAll(childScenarios);
         if (_tagsPendingAssignmentToChild.isNotEmpty) {
           for (final t in _tagsPendingAssignmentToChild) {
-            childScenarios.forEach((s) => s.addTag(t));
+            for (final scenario in childScenarios) {
+              scenario.addTag(t);
+            }
           }
           _tagsPendingAssignmentToChild.clear();
         }

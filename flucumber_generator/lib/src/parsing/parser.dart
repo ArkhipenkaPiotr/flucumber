@@ -57,18 +57,14 @@ class GherkinParser {
           RegExp(r'(\r\n|\r|\n)', multiLine: true),
         );
 
-    try {
-      _parseBlock(
-        languageService,
-        languageService.getDialect(),
-        FeatureFileSyntax(),
-        featureFile,
-        lines,
-        0,
-      );
-    } catch (e) {
-      rethrow;
-    }
+    _parseBlock(
+      languageService,
+      languageService.getDialect(),
+      FeatureFileSyntax(),
+      featureFile,
+      lines,
+      0,
+    );
 
     return featureFile;
   }

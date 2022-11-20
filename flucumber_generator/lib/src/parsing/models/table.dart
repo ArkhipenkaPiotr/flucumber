@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'table_row.dart';
 
 class GherkinTable {

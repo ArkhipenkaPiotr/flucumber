@@ -11,8 +11,7 @@ class FeatureFileGenerator extends ConfigSnippetGenerator {
 
   @override
   String generate(List<StepsDefinitionFileMetadata> definitions) {
-    final stringBuffer = StringBuffer();
-    stringBuffer
+    final stringBuffer = StringBuffer()
       ..writeln('FeatureFileRunner(')
       ..writeln("fileName: '${featureFileRunner.name}',")
       ..writeln('features: [');
@@ -22,8 +21,9 @@ class FeatureFileGenerator extends ConfigSnippetGenerator {
       stringBuffer.writeln(generator.generate(definitions));
     }
 
-    stringBuffer.writeln('],');
-    stringBuffer.writeln('),');
+    stringBuffer
+      ..writeln('],')
+      ..writeln('),');
     return stringBuffer.toString();
   }
 }

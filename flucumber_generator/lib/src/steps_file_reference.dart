@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:build/build.dart';
-import 'package:flucumber_annotations/src/params/definition_params_extractor.dart';
+import 'package:flucumber_annotations/flucumber_annotations.dart';
 import 'package:path/path.dart' as path;
 
 class StepsDefinitionFileMetadata {
@@ -18,7 +18,10 @@ class StepsDefinitionFileMetadata {
   });
 
   static Future<StepsDefinitionFileMetadata> fromAssetId(
-      BuildStep buildStep, AssetId stepsDefinitionFileId, Uri annotatedFilePathUri) async {
+    BuildStep buildStep,
+    AssetId stepsDefinitionFileId,
+    Uri annotatedFilePathUri,
+  ) async {
     final packageName = stepsDefinitionFileId.package;
 
     final stepsFilePath = path
@@ -43,10 +46,11 @@ class StepsDefinitionFileMetadata {
     ).toList();
 
     return StepsDefinitionFileMetadata._(
-        packageName: packageName,
-        filePath: stepsFilePath,
-        methodRefs: refs,
-        filePseudonym: pseudonym);
+      packageName: packageName,
+      filePath: stepsFilePath,
+      methodRefs: refs,
+      filePseudonym: pseudonym,
+    );
   }
 
   String get importString => "import '$filePath' as $filePseudonym;";

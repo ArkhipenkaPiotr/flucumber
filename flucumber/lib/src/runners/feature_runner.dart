@@ -14,7 +14,7 @@ class FeatureRunner {
     this.background,
   });
 
-  void run(Function appMainFunction) async {
+  void run(Function appMainFunction) {
     group(name, () {
       for (final scenario in scenarios) {
         scenario.runScenario(appMainFunction, background);

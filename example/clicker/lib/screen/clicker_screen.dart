@@ -17,8 +17,9 @@ class _ClickerScreenState extends State<ClickerScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ClickerCubit>(
-        create: (context) => ClickerCubit(),
-        child: BlocBuilder<ClickerCubit, ClickerState>(builder: (context, state) {
+      create: (context) => ClickerCubit(),
+      child: BlocBuilder<ClickerCubit, ClickerState>(
+        builder: (context, state) {
           if (state is GameInActionClickerState) {
             return ClickerGameInActionScreen(state: state);
           }
@@ -30,6 +31,8 @@ class _ClickerScreenState extends State<ClickerScreen> {
           }
 
           return const ClickerWelcomeScreen();
-        }));
+        },
+      ),
+    );
   }
 }

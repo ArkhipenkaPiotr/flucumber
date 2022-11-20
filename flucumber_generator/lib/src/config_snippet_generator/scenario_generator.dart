@@ -11,8 +11,7 @@ class ScenarioGenerator extends ConfigSnippetGenerator {
 
   @override
   String generate(List<StepsDefinitionFileMetadata> definitions) {
-    final stringBuffer = StringBuffer();
-    stringBuffer
+    final stringBuffer = StringBuffer()
       ..writeln('ScenarioRunner(')
       ..writeln("scenarioName: '${_scenarioRunnable.name}',");
 
@@ -43,7 +42,7 @@ class ScenarioGenerator extends ConfigSnippetGenerator {
       stringBuffer
         ..writeln('ExampleVariable(')
         ..writeln("variableName: '$variableName',")
-        ..writeln('values: [${values?.map((e) => "'$e'").join(',')}]')
+        ..writeln('values: [${values?.map((e) => "'$e'").join(',')}],')
         ..writeln('),');
     }
 

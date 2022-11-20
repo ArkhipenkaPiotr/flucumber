@@ -5,7 +5,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:collection/collection.dart';
 import 'package:flucumber_annotations/flucumber_annotations.dart';
-import 'package:flucumber_annotations/src/params/definition_params_extractor.dart';
 import 'package:flucumber_generator/src/utils/library_extensions.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -35,7 +34,7 @@ class FlucumberStepsGenerator extends Generator {
 
   void _validateMethod(Element element) {
     if (element is! ExecutableElement) {
-      throw ('${element.displayName} is not a method');
+      throw Exception('${element.displayName} is not a method');
     }
 
     _checkIsMethodPublic(element);
@@ -52,13 +51,13 @@ class FlucumberStepsGenerator extends Generator {
   void _checkFirstParamIsContext(ExecutableElement element) {
     final firstParam = element.parameters.first;
     if (firstParam.type.toString() != 'FlucumberContext') {
-      throw 'First parameter of ${element.name} must be a FlucumberContext';
+      Exception('First parameter of ${element.name} must be a FlucumberContext');
     }
   }
 
   void _checkParamsCount(ExecutableElement element) {
     if (element.parameters.length > 10) {
-      throw 'Error in ${element.name} method\nMaximum numbers of parameters is 7';
+      Exception('Error in ${element.name} method\nMaximum numbers of parameters is 7');
     }
   }
 
@@ -71,11 +70,11 @@ class FlucumberStepsGenerator extends Generator {
         .toList();
     final actualTypes = element.parameters.map((e) => e.type.toString()).toList();
 
-    final listEquality = ListEquality<String>();
+    const listEquality = ListEquality<String>();
     if (!listEquality.equals(expectedTypes, actualTypes..removeAt(0))) {
-      throw 'Wrong parameter types in ${element.name}\n'
+      Exception('Wrong parameter types in ${element.name}\n'
           'According to step definition, params should have types:\n'
-          'FlucumberContext, ${expectedTypes.join(", ")}';
+          'FlucumberContext, ${expectedTypes.join(", ")}');
     }
   }
 }

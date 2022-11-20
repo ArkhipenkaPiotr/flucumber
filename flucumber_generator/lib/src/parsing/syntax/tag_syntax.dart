@@ -23,13 +23,13 @@ class TagSyntax extends RegExMatchedGherkinSyntax<TagsRunnable> {
     RunnableDebugInformation debug,
     GherkinDialect dialect,
   ) {
-    final runnable = TagsRunnable(debug);
-    runnable.tags = line
-        .trim()
-        .split(RegExp('@'))
-        .where((t) => t.isNotEmpty)
-        .map((t) => '@${t.trim()}')
-        .toList();
+    final runnable = TagsRunnable(debug)
+      ..tags = line
+          .trim()
+          .split(RegExp('@'))
+          .where((t) => t.isNotEmpty)
+          .map((t) => '@${t.trim()}')
+          .toList();
 
     return runnable;
   }
@@ -43,9 +43,7 @@ class TagSyntax extends RegExMatchedGherkinSyntax<TagsRunnable> {
       dialect.feature,
       dialect.scenarioOutline,
       dialect.scenario,
-    ]
-        .map((b) => RegExMatchedGherkinSyntax.getMultiDialectRegexPattern(b))
-        .toList();
+    ].map(RegExMatchedGherkinSyntax.getMultiDialectRegexPattern).toList();
     for (final dialectPattern in blockLabels) {
       final regex = RegExp('^\\s*(?:$dialectPattern)');
       if (nextLine.startsWith(regex)) {

@@ -5,8 +5,6 @@ analyzer:
     # Generated code
     - "**/*.g.dart"
     - "**/*.gr.dart"
-    # Tests
-    - "*.flucumber.dart"
     # Web
     - "web/**"
     # Build
@@ -202,7 +200,6 @@ linter:
     avoid_positional_boolean_parameters: true
     hash_and_equals: true
     avoid_equals_and_hash_code_on_mutable_classes: true
-    avoid_dynamic_calls: true
     avoid_multiple_declarations_per_line: true
     avoid_type_to_string: true
     deprecated_consistency: true

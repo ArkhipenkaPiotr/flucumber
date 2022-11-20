@@ -18,7 +18,7 @@ class ClickerCubit extends Cubit<ClickerState> {
     emit(GameInActionClickerState(clicks: _clicksCounter, progress: GameProgress.low));
   }
 
-  void onGameTimeout() async {
+  Future onGameTimeout() async {
     var bestResult = await _gameStatisticsRepository.bestResult;
 
     if (_clicksCounter > bestResult) {
@@ -26,15 +26,21 @@ class ClickerCubit extends Cubit<ClickerState> {
       bestResult = _clicksCounter;
     }
 
-    emit(GameResultsClickerState(
-      clicks: _clicksCounter,
-      bestResult: bestResult,
-    ));
+    emit(
+      GameResultsClickerState(
+        clicks: _clicksCounter,
+        bestResult: bestResult,
+      ),
+    );
   }
 
   void processClick() {
-    emit(GameInActionClickerState(
-        clicks: ++_clicksCounter, progress: _getProgressByClicks(_clicksCounter)));
+    emit(
+      GameInActionClickerState(
+        clicks: ++_clicksCounter,
+        progress: _getProgressByClicks(_clicksCounter),
+      ),
+    );
   }
 
   GameProgress _getProgressByClicks(int clicks) {

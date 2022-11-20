@@ -25,7 +25,7 @@ class StepRunner {
   }
 
   String _replaceExampleVariablesWithValues(List<ExampleValue> exampleValues) {
-    String result = actualStep;
+    var result = actualStep;
     for (final exampleValue in exampleValues) {
       result = result.replaceAll('<${exampleValue.variableName}>', exampleValue.variableValue);
     }

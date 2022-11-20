@@ -37,7 +37,7 @@ class ScenarioRunner {
     Function appMainFunction, [
     BackgroundRunner? backgroundRunner,
     List<ExampleValue>? exampleValues,
-  ]) async {
+  ]) {
     testWidgets(scenarioName, (tester) async {
       appMainFunction();
       final context = FlucumberContext(tester);

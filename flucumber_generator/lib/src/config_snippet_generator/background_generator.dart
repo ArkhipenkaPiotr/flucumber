@@ -10,9 +10,7 @@ class BackgroundGenerator extends ConfigSnippetGenerator {
 
   @override
   String generate(List<StepsDefinitionFileMetadata> definitions) {
-    final stringBuffer = StringBuffer();
-
-    stringBuffer
+    final stringBuffer = StringBuffer()
       ..writeln('BackgroundRunner(')
       ..writeln("name: '${_backgroundRunnable.name}',")
       ..writeln('steps: [');

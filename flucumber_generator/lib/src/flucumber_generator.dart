@@ -13,17 +13,21 @@ import 'package:source_gen/source_gen.dart';
 
 class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
   @override
-  generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) async {
+  dynamic generateForAnnotatedElement(
+    Element element,
+    ConstantReader annotation,
+    BuildStep buildStep,
+  ) async {
     final configFiles = Glob('**.flucumber_steps.json');
     final stepDefinitionFiles = buildStep.findAssets(configFiles);
 
-    final result = StringBuffer();
-    result.writeln("import 'package:flucumber/flucumber.dart';");
+    final result = StringBuffer()
+      ..writeln('// ignore_for_file: directives_ordering')
+      ..writeln("import 'package:flucumber/flucumber.dart';");
 
     final filePath = element.source?.uri;
 
-    final List<StepsDefinitionFileMetadata> stepsFileMetadatas = [];
+    final stepsFileMetadatas = <StepsDefinitionFileMetadata>[];
 
     await for (final id in stepDefinitionFiles) {
       final stepsFileReference =
@@ -32,19 +36,25 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
       stepsFileMetadatas.add(stepsFileReference);
     }
 
-    result.writeln(
-        'void runIntegrationTests(Function appMainFunction, [List<String> filesToRun = const []]) {');
-    result.writeln(
-        'runFlucumberIntegrationTests(appMainFunction: appMainFunction, featureFiles: _featureFiles, filesToRun: filesToRun,);');
-    result.writeln('}\n');
+    result
+      ..writeln(
+        'void runIntegrationTests(Function appMainFunction, [List<String> filesToRun = const [],]) {',
+      )
+      ..writeln(
+        'runFlucumberIntegrationTests(appMainFunction: appMainFunction, featureFiles: _featureFiles, filesToRun: filesToRun,);',
+      )
+      ..writeln('}\n');
 
     await _generateFeatures(result, annotation, stepsFileMetadatas);
 
     return result.toString();
   }
 
-  Future _generateFeatures(StringBuffer resultBuffer, ConstantReader annotation,
-      List<StepsDefinitionFileMetadata> stepDefinitionFileMetadatas) async {
+  Future _generateFeatures(
+    StringBuffer resultBuffer,
+    ConstantReader annotation,
+    List<StepsDefinitionFileMetadata> stepDefinitionFileMetadatas,
+  ) async {
     final language = annotation.read('language').stringValue;
     final featuresPath = annotation.read('scenariosPath').stringValue;
     final directory = Directory(featuresPath);
@@ -64,8 +74,12 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
     resultBuffer.writeln('];');
   }
 
-  Future _generateFeatureFile(StringBuffer resultBuffer, FileSystemEntity file, String language,
-      List<StepsDefinitionFileMetadata> stepDefinitionFileMetadatas) async {
+  Future _generateFeatureFile(
+    StringBuffer resultBuffer,
+    FileSystemEntity file,
+    String language,
+    List<StepsDefinitionFileMetadata> stepDefinitionFileMetadatas,
+  ) async {
     final parser = GherkinParser();
     final languageService = LanguageService()..initialise(language);
 

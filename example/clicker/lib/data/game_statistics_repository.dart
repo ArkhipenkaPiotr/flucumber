@@ -20,6 +20,6 @@ class _PrefsGameStatisticsRepository implements GameStatisticsRepository {
 
   @override
   Future<void> setBestResult(int result) async {
-    (await _prefs).setInt(_bestResultPrefsKey, result);
+    await (await _prefs).setInt(_bestResultPrefsKey, result);
   }
 }

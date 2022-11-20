@@ -41,10 +41,8 @@ class ScenarioOutlineRunnable extends ScenarioRunnable {
 
   @override
   void onTagAdded(TagsRunnable tag) {
-    examples.forEach(
-      (ex) {
-        ex.addTag(tag.clone(inherited: true));
-      },
-    );
+    for (final example in examples) {
+      example.addTag(tag.clone(inherited: true));
+    }
   }
 }

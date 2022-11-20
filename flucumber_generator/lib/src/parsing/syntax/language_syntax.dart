@@ -19,8 +19,8 @@ class LanguageSyntax extends RegExMatchedGherkinSyntax {
     RunnableDebugInformation debug,
     GherkinDialect dialect,
   ) {
-    final runnable = LanguageRunnable(debug);
-    runnable.language = pattern(dialect).firstMatch(line)!.group(1)!;
+    final runnable = LanguageRunnable(debug)
+      ..language = pattern(dialect).firstMatch(line)!.group(1)!;
 
     return runnable;
   }

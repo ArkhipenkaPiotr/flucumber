@@ -20,9 +20,9 @@ class TextLineSyntax extends RegExMatchedGherkinSyntax<TextLineRunnable> {
     RunnableDebugInformation debug,
     GherkinDialect dialect,
   ) {
-    final runnable = TextLineRunnable(debug);
-    runnable.originalText = line;
-    runnable.text = line.trim();
+    final runnable = TextLineRunnable(debug)
+      ..originalText = line
+      ..text = line.trim();
     return runnable;
   }
 }

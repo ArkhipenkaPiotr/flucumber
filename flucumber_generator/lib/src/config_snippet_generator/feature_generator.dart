@@ -11,17 +11,16 @@ class FeatureGenerator extends ConfigSnippetGenerator {
 
   @override
   String generate(List<StepsDefinitionFileMetadata> definitions) {
-    final stringBuffer = StringBuffer();
-
-    stringBuffer
+    final stringBuffer = StringBuffer()
       ..writeln('FeatureRunner(')
       ..writeln("name: '${featureRunnable.name}',");
 
     final background = featureRunnable.background;
     if (background != null) {
       final generator = BackgroundGenerator(background);
-      stringBuffer.writeln('background: ');
-      stringBuffer.write(generator.generate(definitions));
+      stringBuffer
+        ..writeln('background: ')
+        ..write(generator.generate(definitions));
     }
 
     stringBuffer.writeln('scenarios: [');
@@ -31,9 +30,9 @@ class FeatureGenerator extends ConfigSnippetGenerator {
       stringBuffer.writeln(generator.generate(definitions));
     }
 
-    stringBuffer.writeln('],');
-
-    stringBuffer.writeln('),');
+    stringBuffer
+      ..writeln('],')
+      ..writeln('),');
 
     return stringBuffer.toString();
   }

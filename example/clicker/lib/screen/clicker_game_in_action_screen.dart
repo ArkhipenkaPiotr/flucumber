@@ -18,7 +18,10 @@ class ClickerGameInActionScreen extends StatefulWidget {
 
   final GameInActionClickerState state;
 
-  const ClickerGameInActionScreen({Key? key = contentKey, required this.state}) : super(key: key);
+  const ClickerGameInActionScreen({
+    required this.state,
+    Key? key = contentKey,
+  }) : super(key: key);
 
   @override
   State<ClickerGameInActionScreen> createState() => _ClickerGameInActionScreenState();
@@ -65,10 +68,11 @@ class _ClickerGameInActionScreenState extends State<ClickerGameInActionScreen> {
               Text('Clicks: ${widget.state.clicks}'),
               const Spacer(),
               _ClickSpace(
-                  key: ClickerGameInActionScreen.clickSpaceKey,
-                  onClick: () {
-                    context.read<ClickerCubit>().processClick();
-                  }),
+                key: ClickerGameInActionScreen.clickSpaceKey,
+                onClick: () {
+                  context.read<ClickerCubit>().processClick();
+                },
+              ),
               const Spacer(),
             ],
           ),
@@ -117,7 +121,10 @@ class _ClickerGameInActionScreenState extends State<ClickerGameInActionScreen> {
 class _ClickSpace extends StatelessWidget {
   final VoidCallback onClick;
 
-  const _ClickSpace({Key? key, required this.onClick}) : super(key: key);
+  const _ClickSpace({
+    required this.onClick,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,10 +139,11 @@ class _ClickSpace extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: Center(
-            child: Text(
-          'Click!',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
-        )),
+          child: Text(
+            'Click!',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
+          ),
+        ),
       ),
     );
   }
