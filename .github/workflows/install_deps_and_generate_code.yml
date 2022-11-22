@@ -1,0 +1,19 @@
+on:
+  workflow_call:
+
+jobs:
+  install_deps_and_generate_code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+      - name: Pub get
+        run: flutter pub get
+      - name: Install melos
+        run: |
+          dart pub global activate melos
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          melos clean
+          melos bs
