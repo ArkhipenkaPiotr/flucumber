@@ -21,24 +21,24 @@ jobs:
           melos clean
           melos bs
       - name: Analyze clicker example
-        uses: zgosalvez/github-actions-analyze-dart@v1
+        uses: invertase/github-action-dart-analyzer@v1
         with:
           fail-on-warnings: true
           working-directory: ./example/clicker
       - name: Analyze flucumber package
-        uses: zgosalvez/github-actions-analyze-dart@v1
+        uses: invertase/github-action-dart-analyzer@v1
         with:
-          fail-on-warnings: true
+          fatal-infos: true
           working-directory: ./flucumber
       - name: Analyze flucumber_annotations package
-        uses: zgosalvez/github-actions-analyze-dart@v1
+        uses: invertase/github-action-dart-analyzer@v1
         with:
-          fail-on-warnings: true
+          fatal-infos: true
           working-directory: ./flucumber_annotations
       - name: Analyze flucumber_generator package
-        uses: zgosalvez/github-actions-analyze-dart@v1
+        uses: invertase/github-action-dart-analyzer@v1
         with:
-          fail-on-warnings: true
+          fatal-infos: true
           working-directory: ./flucumber_generator
 
 
