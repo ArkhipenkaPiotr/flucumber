@@ -49,7 +49,8 @@ class ScenarioGenerator extends ConfigSnippetGenerator {
     stringBuffer.writeln('],),');
   }
 
-  void _generateSteps(StringBuffer stringBuffer, List<StepsDefinitionFileMetadata> definitions) {
+  void _generateSteps(StringBuffer stringBuffer,
+      List<StepsDefinitionFileMetadata> definitions) {
     stringBuffer.writeln('steps: [');
 
     for (final step in _scenarioRunnable.steps) {

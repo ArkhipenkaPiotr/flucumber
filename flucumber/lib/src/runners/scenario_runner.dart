@@ -12,7 +12,8 @@ class ScenarioRunner {
   final String scenarioName;
   final Examples? examples;
 
-  ScenarioRunner({required this.scenarioName, required this.steps, this.examples});
+  ScenarioRunner(
+      {required this.scenarioName, required this.steps, this.examples});
 
   void runScenario(
     Function appMainFunction, [

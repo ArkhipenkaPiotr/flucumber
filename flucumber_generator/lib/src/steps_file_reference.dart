@@ -25,12 +25,15 @@ class StepsDefinitionFileMetadata {
     final packageName = stepsDefinitionFileId.package;
 
     final stepsFilePath = path
-        .relative(stepsDefinitionFileId.uri.path, from: annotatedFilePathUri.path)
+        .relative(stepsDefinitionFileId.uri.path,
+            from: annotatedFilePathUri.path)
         .replaceFirst('../', '')
         .replaceAll('.flucumber_steps.json', '.dart');
 
-    final pseudonym =
-        stepsFilePath.replaceAll('../', '').replaceAll('.dart', '').replaceAll('/', '_');
+    final pseudonym = stepsFilePath
+        .replaceAll('../', '')
+        .replaceAll('.dart', '')
+        .replaceAll('/', '_');
 
     final content = await buildStep.readAsString(stepsDefinitionFileId);
     final contentMap = jsonDecode(content) as Map<String, dynamic>;
@@ -59,7 +62,8 @@ class StepsDefinitionFileMetadata {
     final extractor = DefinitionParamsExtractor();
 
     final matchingRefs = methodRefs.where((element) {
-      final definition = extractor.definitionToRegexpFormat(element.stepDefinition);
+      final definition =
+          extractor.definitionToRegexpFormat(element.stepDefinition);
 
       return RegExp(definition).hasMatch(stepName);
     });

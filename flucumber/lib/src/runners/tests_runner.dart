@@ -10,8 +10,8 @@ void runFlucumberIntegrationTests({
   if (filesToRun.isEmpty) {
     featureFilesToRun = featureFiles;
   } else {
-    featureFilesToRun =
-        featureFiles.where((featureName) => filesToRun.contains(featureName.fileName));
+    featureFilesToRun = featureFiles
+        .where((featureName) => filesToRun.contains(featureName.fileName));
   }
 
   for (final feature in featureFilesToRun) {

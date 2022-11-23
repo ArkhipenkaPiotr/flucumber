@@ -88,7 +88,8 @@ class GherkinParser {
       ///
       /// This is a subpar solution and would be a good candidate to refactor
       if (matcher is TagSyntax) {
-        matcher.annotating = TagSyntax.determineAnnotationBlock(lines.elementAt(i + 1), dialect);
+        matcher.annotating =
+            TagSyntax.determineAnnotationBlock(lines.elementAt(i + 1), dialect);
       }
 
       if (matcher == null) {
@@ -106,8 +107,8 @@ class GherkinParser {
         }
       }
 
-      final useUntrimmedLines =
-          matcher is MultilineStringSyntax || parentBlock is MultilineStringRunnable;
+      final useUntrimmedLines = matcher is MultilineStringSyntax ||
+          parentBlock is MultilineStringRunnable;
 
       final runnable = matcher.toRunnable(
         useUntrimmedLines ? lines.elementAt(i) : line,

@@ -14,7 +14,11 @@ Future assertThatGameIsStarted(FlucumberContext context) async {
 @And('Make sure that game title is {string}')
 @And('Убедиться, что заголовок игры {string}')
 Future assertThatGameTitleIs(FlucumberContext context, String title) async {
-  final widget = find.byKey(ClickerGameInActionScreen.gameTitleKey).evaluate().first.widget as Text;
+  final widget = find
+      .byKey(ClickerGameInActionScreen.gameTitleKey)
+      .evaluate()
+      .first
+      .widget as Text;
   expect(widget.data, equals(title));
 }
 
@@ -22,7 +26,8 @@ Future assertThatGameTitleIs(FlucumberContext context, String title) async {
 @And('Нажать на счётчик {int} раз')
 Future clickToCounterNTimes(FlucumberContext context, int times) async {
   for (var i = 0; i < times; i++) {
-    final finder = find.byKey(ClickerGameInActionScreen.clickSpaceKey).hitTestable();
+    final finder =
+        find.byKey(ClickerGameInActionScreen.clickSpaceKey).hitTestable();
     await context.tester.tap(finder);
     await context.tester.pump();
   }

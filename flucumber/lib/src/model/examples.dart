@@ -12,6 +12,8 @@ class Examples {
   });
 
   List<ExampleValue> getValuesOf(int index) {
-    return variables.map((e) => ExampleValue(e.variableName, e.values[index])).toList();
+    return variables
+        .map((e) => ExampleValue(e.variableName, e.values[index]))
+        .toList();
   }
 }

@@ -10,7 +10,8 @@ class DefinitionParamsExtractor {
         appearances.add(TypeAppearance(param, index));
       }
     }
-    final sortedByIndexAsc = appearances..sort((a, b) => a.appearanceIndex - b.appearanceIndex);
+    final sortedByIndexAsc = appearances
+      ..sort((a, b) => a.appearanceIndex - b.appearanceIndex);
 
     return sortedByIndexAsc;
   }
@@ -41,7 +42,8 @@ class DefinitionParamsExtractor {
       final paramInRegExpFormat = param.matcher;
       const tableParamRegExp = '<.*>';
 
-      resultString = resultString.replaceAll(param.name, '($paramInRegExpFormat|$tableParamRegExp)');
+      resultString = resultString.replaceAll(
+          param.name, '($paramInRegExpFormat|$tableParamRegExp)');
     }
 
     return resultString;
