@@ -31,7 +31,7 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
 
     await for (final id in stepDefinitionFiles) {
       final stepsFileReference = await StepsDefinitionFileMetadata.fromAssetId(
-          buildStep, id, filePath!);
+          buildStep, id, filePath!,);
       result.writeln(stepsFileReference.importString);
       stepsFileMetadatas.add(stepsFileReference);
     }
@@ -68,7 +68,7 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
       final fileExtension = extension(file.path);
       if (fileExtension == '.feature') {
         await _generateFeatureFile(
-            resultBuffer, file, language, stepDefinitionFileMetadatas);
+            resultBuffer, file, language, stepDefinitionFileMetadatas,);
       }
     }
 
@@ -86,7 +86,7 @@ class FlucumberGenerator extends GeneratorForAnnotation<Flucumber> {
 
     final featureContent = File(file.path).readAsStringSync();
     final featureFile = await parser.parseFeatureFile(
-        featureContent, file.path, languageService);
+        featureContent, file.path, languageService,);
     final generator = FeatureFileGenerator(featureFile);
 
     resultBuffer.writeln(generator.generate(stepDefinitionFileMetadatas));

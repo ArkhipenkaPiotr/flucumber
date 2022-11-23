@@ -23,7 +23,7 @@ class StepGenerator extends ConfigSnippetGenerator {
   }
 
   StepMetadata _findStepMetadata(
-      List<StepsDefinitionFileMetadata> definitions) {
+      List<StepsDefinitionFileMetadata> definitions,) {
     for (final fileMetadata in definitions) {
       final stepMetadata = fileMetadata.findStep(_stepRunnable.name);
       if (stepMetadata != null) return stepMetadata;

@@ -16,7 +16,7 @@ class ClickerCubit extends Cubit<ClickerState> {
   void startGame() {
     _clicksCounter = 0;
     emit(GameInActionClickerState(
-        clicks: _clicksCounter, progress: GameProgress.low));
+        clicks: _clicksCounter, progress: GameProgress.low,),);
   }
 
   Future onGameTimeout() async {

@@ -24,3 +24,7 @@ scripts:
   format:
     exec: dart format . --fix
     description: Format all files
+
+  fix:
+    exec: dart fix --apply
+    description: Fix analysis issues where possible
