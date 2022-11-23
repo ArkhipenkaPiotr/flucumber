@@ -8,9 +8,10 @@ on:
 
 jobs:
   dart_analysis:
-    uses: ./.github/workflows/install_deps_and_generate_code.yml
     runs-on: ubuntu-latest
     steps:
+      - name: Codegen
+        uses: ./.github/workflows/install_deps_and_generate_code.yml
       - name: Analyze clicker example
         uses: zgosalvez/github-actions-analyze-dart@v1
         with:
