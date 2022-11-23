@@ -28,3 +28,7 @@ scripts:
   fix:
     exec: dart fix --apply
     description: Fix analysis issues where possible
+
+  analyze:
+    exec: dart analyze .
+    description: Analyze all packages

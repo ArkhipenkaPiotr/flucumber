@@ -5,16 +5,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 @But('Make sure that result of game is {int} clicks')
 @But('Убедиться, что результат игры - {int} кликов')
-Future assertThatResultOfGameIsNClicks(
-    FlucumberContext context, int clicks,) async {
+Future assertThatResultOfGameIsNClicks(FlucumberContext context, int clicks,) async {
   final finder = find.text('Your result: $clicks');
   expect(finder, findsOneWidget);
 }
 
 @Then('Make sure the best result is {int}')
 @Then('Убедиться, что лучший результат - {int}')
-Future assertThatBestResultOfGameIsNClicks(
-    FlucumberContext context, int clicks,) async {
+Future assertThatBestResultOfGameIsNClicks(FlucumberContext context, int clicks,) async {
   final finder = find.text('Best result: $clicks');
   expect(finder, findsOneWidget);
 }
