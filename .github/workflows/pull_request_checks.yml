@@ -23,7 +23,7 @@ jobs:
       - name: Analyze clicker example
         uses: invertase/github-action-dart-analyzer@v1
         with:
-          fail-on-warnings: true
+          fatal-infos: true
           working-directory: ./example/clicker
       - name: Analyze flucumber package
         uses: invertase/github-action-dart-analyzer@v1
