@@ -10,6 +10,8 @@ jobs:
   dart_analysis:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Codegen
         uses: ./.github/workflows/install_deps_and_generate_code.yml
       - name: Analyze clicker example
