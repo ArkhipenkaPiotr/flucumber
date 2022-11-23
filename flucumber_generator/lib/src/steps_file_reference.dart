@@ -25,8 +25,10 @@ class StepsDefinitionFileMetadata {
     final packageName = stepsDefinitionFileId.package;
 
     final stepsFilePath = path
-        .relative(stepsDefinitionFileId.uri.path,
-            from: annotatedFilePathUri.path,)
+        .relative(
+          stepsDefinitionFileId.uri.path,
+          from: annotatedFilePathUri.path,
+        )
         .replaceFirst('../', '')
         .replaceAll('.flucumber_steps.json', '.dart');
 

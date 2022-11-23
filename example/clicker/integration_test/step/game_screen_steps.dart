@@ -27,7 +27,7 @@ Future assertThatGameTitleIs(FlucumberContext context, String title) async {
 Future clickToCounterNTimes(FlucumberContext context, int times) async {
   for (var i = 0; i < times; i++) {
     final finder =
-    find.byKey(ClickerGameInActionScreen.clickSpaceKey).hitTestable();
+        find.byKey(ClickerGameInActionScreen.clickSpaceKey).hitTestable();
     await context.tester.tap(finder);
     await context.tester.pump();
   }

@@ -43,7 +43,9 @@ class DefinitionParamsExtractor {
       const tableParamRegExp = '<.*>';
 
       resultString = resultString.replaceAll(
-          param.name, '($paramInRegExpFormat|$tableParamRegExp)',);
+        param.name,
+        '($paramInRegExpFormat|$tableParamRegExp)',
+      );
     }
 
     return resultString;

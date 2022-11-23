@@ -52,19 +52,23 @@ class FlucumberStepsGenerator extends Generator {
     final firstParam = element.parameters.first;
     if (firstParam.type.toString() != 'FlucumberContext') {
       Exception(
-          'First parameter of ${element.name} must be a FlucumberContext',);
+        'First parameter of ${element.name} must be a FlucumberContext',
+      );
     }
   }
 
   void _checkParamsCount(ExecutableElement element) {
     if (element.parameters.length > 10) {
       Exception(
-          'Error in ${element.name} method\nMaximum numbers of parameters is 7',);
+        'Error in ${element.name} method\nMaximum numbers of parameters is 7',
+      );
     }
   }
 
   void _checkParametersMatching(
-      ExecutableElement element, String stepDefinition,) {
+    ExecutableElement element,
+    String stepDefinition,
+  ) {
     final definitionParamExtractor = DefinitionParamsExtractor();
 
     final expectedTypes = definitionParamExtractor
