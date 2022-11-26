@@ -2,10 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 extension WidgetTesterExtensions on WidgetTester {
   Future<bool> pumpUntilVisible(
-      Finder target, {
-        Duration timeout = _defaultPumpTimeout,
-        bool doThrow = true,
-      }) async {
+    Finder target, {
+    Duration timeout = _defaultPumpTimeout,
+    bool doThrow = true,
+  }) async {
     bool condition() => target.evaluate().isNotEmpty;
     final found = await pumpUntilCondition(condition, timeout: timeout);
     if (!found && doThrow) {
@@ -15,9 +15,9 @@ extension WidgetTesterExtensions on WidgetTester {
   }
 
   Future<bool> pumpUntilCondition(
-      bool Function() condition, {
-        Duration timeout = _defaultPumpTimeout,
-      }) {
+    bool Function() condition, {
+    Duration timeout = _defaultPumpTimeout,
+  }) {
     return TestAsyncUtils.guard<bool>(() async {
       final endTime = binding.clock.fromNowBy(timeout);
       var instant = true;

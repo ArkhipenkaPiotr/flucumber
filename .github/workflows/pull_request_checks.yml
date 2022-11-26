@@ -1,0 +1,44 @@
+name: Code style checks before push
+
+on:
+  pull_request:
+    branches:
+      - master
+
+
+jobs:
+  dart_analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+      - name: Install melos
+        run: |
+          dart pub global activate melos
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          melos clean
+          melos bs
+      - name: Analyze clicker example
+        uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: true
+          working-directory: ./example/clicker
+      - name: Analyze flucumber package
+        uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: true
+          working-directory: ./flucumber
+      - name: Analyze flucumber_annotations package
+        uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: true
+          working-directory: ./flucumber_annotations
+      - name: Analyze flucumber_generator package
+        uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: true
+          working-directory: ./flucumber_generator
+
+

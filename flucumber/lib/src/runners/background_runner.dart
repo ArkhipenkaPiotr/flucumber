@@ -10,7 +10,10 @@ class BackgroundRunner {
     this.name,
   });
 
-  Future runBackground(Function appMainFunction, FlucumberContext context) async {
+  Future runBackground(
+    Function appMainFunction,
+    FlucumberContext context,
+  ) async {
     for (final step in steps) {
       await step.runStep(context, []);
     }

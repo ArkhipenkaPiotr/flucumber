@@ -16,7 +16,10 @@ class StepRunner {
     required this.stepDefinition,
   });
 
-  Future runStep(FlucumberContext context, [List<ExampleValue>? exampleValues]) async {
+  Future runStep(
+    FlucumberContext context, [
+    List<ExampleValue>? exampleValues,
+  ]) async {
     await context.tester.pumpAndSettle();
 
     await invokeRunnerFunction(context, exampleValues ?? []);
@@ -27,12 +30,18 @@ class StepRunner {
   String _replaceExampleVariablesWithValues(List<ExampleValue> exampleValues) {
     var result = actualStep;
     for (final exampleValue in exampleValues) {
-      result = result.replaceAll('<${exampleValue.variableName}>', exampleValue.variableValue);
+      result = result.replaceAll(
+        '<${exampleValue.variableName}>',
+        exampleValue.variableValue,
+      );
     }
     return result;
   }
 
-  Future invokeRunnerFunction(FlucumberContext context, List<ExampleValue> exampleValues) async {
+  Future invokeRunnerFunction(
+    FlucumberContext context,
+    List<ExampleValue> exampleValues,
+  ) async {
     if (runnerFunction is Future Function()) {
       await runnerFunction();
       return;

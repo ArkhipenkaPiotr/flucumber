@@ -16,7 +16,8 @@ class _PrefsGameStatisticsRepository implements GameStatisticsRepository {
   Future<SharedPreferences> get _prefs => SharedPreferences.getInstance();
 
   @override
-  Future<int> get bestResult async => (await _prefs).getInt(_bestResultPrefsKey) ?? 0;
+  Future<int> get bestResult async =>
+      (await _prefs).getInt(_bestResultPrefsKey) ?? 0;
 
   @override
   Future<void> setBestResult(int result) async {

@@ -51,24 +51,32 @@ class FlucumberStepsGenerator extends Generator {
   void _checkFirstParamIsContext(ExecutableElement element) {
     final firstParam = element.parameters.first;
     if (firstParam.type.toString() != 'FlucumberContext') {
-      Exception('First parameter of ${element.name} must be a FlucumberContext');
+      Exception(
+        'First parameter of ${element.name} must be a FlucumberContext',
+      );
     }
   }
 
   void _checkParamsCount(ExecutableElement element) {
     if (element.parameters.length > 10) {
-      Exception('Error in ${element.name} method\nMaximum numbers of parameters is 7');
+      Exception(
+        'Error in ${element.name} method\nMaximum numbers of parameters is 7',
+      );
     }
   }
 
-  void _checkParametersMatching(ExecutableElement element, String stepDefinition) {
+  void _checkParametersMatching(
+    ExecutableElement element,
+    String stepDefinition,
+  ) {
     final definitionParamExtractor = DefinitionParamsExtractor();
 
     final expectedTypes = definitionParamExtractor
         .getExpectedParamsTypes(stepDefinition)
         .map((e) => e.toString())
         .toList();
-    final actualTypes = element.parameters.map((e) => e.type.toString()).toList();
+    final actualTypes =
+        element.parameters.map((e) => e.type.toString()).toList();
 
     const listEquality = ListEquality<String>();
     if (!listEquality.equals(expectedTypes, actualTypes..removeAt(0))) {

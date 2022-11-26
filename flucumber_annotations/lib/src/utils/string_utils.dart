@@ -16,8 +16,7 @@ extension StringExtension on String {
       if (lastIndex != -1) {
         indexes.add(lastIndex);
       }
-
-    } while(lastIndex != -1);
+    } while (lastIndex != -1);
 
     return indexes;
   }
