@@ -32,3 +32,20 @@ scripts:
   analyze:
     exec: dart analyze .
     description: Analyze all packages
+
+  dart_code_metrics:all:
+    run: |
+      dart pub global activate dart_code_metrics 4.19.1
+      melos run dart_code_metrics_global_pub:no_pub --no-select
+      status=$?
+      dart pub global deactivate dart_code_metrics
+      exit "$status"
+    description: Run 'dart_code_metrics' check with 4.19.1 version
+
+  dart_code_metrics_global_pub:no_pub:
+    run: metrics analyze . --fatal-style --fatal-performance --set-exit-on-violation-level=warning --fatal-warnings
+    exec:
+      concurrency: 6
+    select-package:
+      dir-exists:
+        - lib

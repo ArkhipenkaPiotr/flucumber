@@ -40,5 +40,22 @@ jobs:
         with:
           fatal-infos: true
           working-directory: ./flucumber_generator
+  dart_code_metrics_check:
+    name: dart-code-metrics-check
 
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: dart-code-metrics
+        uses: dart-code-checker/dart-code-metrics-action@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          folders: [ example/clicker/lib, example/clicker/integration_test, flucumber/lib, flucumber_annotations/lib, flucumber_generator/lib ]
+          pull_request_comment: true
+          fatal_warnings: true
+          fatal_performance: true
+          fatal_style: true
+          check_unused_files: true
 
