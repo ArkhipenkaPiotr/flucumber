@@ -4,7 +4,6 @@ import 'package:clicker/cubit/clicker_cubit.dart';
 import 'package:clicker/cubit/clicker_state.dart';
 import 'package:clicker/model/game_progress.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ClickerGameInActionScreen extends StatefulWidget {

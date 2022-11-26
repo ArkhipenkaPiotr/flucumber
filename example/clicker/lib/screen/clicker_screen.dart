@@ -30,7 +30,6 @@ class _ClickerScreenState extends State<ClickerScreen> {
             );
           }
 
-          final brokenCode = BrokenCode();
           return const ClickerWelcomeScreen();
         },
       ),
