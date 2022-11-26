@@ -52,7 +52,8 @@ jobs:
         uses: dart-code-checker/dart-code-metrics-action@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          folders: "example/clicker/lib, example/clicker/integration_test, flucumber/lib, flucumber_annotations/lib, flucumber_generator/lib"
+          relative_path: 'example/clicker'
+          folders: "lib, integration_test"
           pull_request_comment: true
           fatal_warnings: true
           fatal_performance: true
