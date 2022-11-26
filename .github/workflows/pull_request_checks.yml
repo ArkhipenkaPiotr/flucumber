@@ -14,12 +14,13 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Flutter
         uses: subosito/flutter-action@v1
-      - name: Install melos
+      - name: Install melos and generate code
         run: |
           dart pub global activate melos
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           melos clean
           melos bs
+          melos run gen --no-select
       - name: Analyze clicker example
         uses: invertase/github-action-dart-analyzer@v1
         with:
@@ -48,12 +49,53 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: dart-code-metrics
+      - name: Install melos and generate code
+        run: |
+          dart pub global activate melos
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          melos clean
+          melos bs
+          melos run gen --no-select
+
+      - name: dart-code-metrics analysis for clicker
         uses: dart-code-checker/dart-code-metrics-action@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           relative_path: 'example/clicker'
           folders: "lib, integration_test"
+          pull_request_comment: true
+          fatal_warnings: true
+          fatal_performance: true
+          fatal_style: true
+          check_unused_files: true
+
+      - name: dart-code-metrics analysis for flucumber
+        uses: dart-code-checker/dart-code-metrics-action@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          relative_path: 'flucumber'
+          pull_request_comment: true
+          fatal_warnings: true
+          fatal_performance: true
+          fatal_style: true
+          check_unused_files: true
+
+      - name: dart-code-metrics analysis for flucumber_annotations
+        uses: dart-code-checker/dart-code-metrics-action@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          relative_path: 'flucumber_annotations'
+          pull_request_comment: true
+          fatal_warnings: true
+          fatal_performance: true
+          fatal_style: true
+          check_unused_files: true
+
+      - name: dart-code-metrics analysis for flucumber_generator
+        uses: dart-code-checker/dart-code-metrics-action@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          relative_path: 'flucumber_generator'
           pull_request_comment: true
           fatal_warnings: true
           fatal_performance: true
