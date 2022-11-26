@@ -77,10 +77,11 @@ class GherkinParser {
     Iterable<String> lines,
     int lineNumber,
   ) {
+    var fileDialect = dialect;
     for (var i = lineNumber; i < lines.length; i += 1) {
       final line = lines.elementAt(i).trim();
       final matcher = syntaxMatchers.firstWhereOrNull(
-        (matcher) => matcher.isMatch(line, dialect),
+        (matcher) => matcher.isMatch(line, fileDialect),
       );
 
       /// Tags are unique because they rely on the next immediate line.
@@ -89,7 +90,7 @@ class GherkinParser {
       /// This is a subpar solution and would be a good candidate to refactor
       if (matcher is TagSyntax) {
         matcher.annotating =
-            TagSyntax.determineAnnotationBlock(lines.elementAt(i + 1), dialect);
+            TagSyntax.determineAnnotationBlock(lines.elementAt(i + 1), fileDialect);
       }
 
       if (matcher == null) {
@@ -113,18 +114,17 @@ class GherkinParser {
       final runnable = matcher.toRunnable(
         useUntrimmedLines ? lines.elementAt(i) : line,
         parentBlock.debug.copyWith(lineNumber: i, lineText: line),
-        dialect,
+        fileDialect,
       );
 
       if (runnable is DialectBlock) {
-        // ignore: parameter_assignments
-        dialect = runnable.getDialect(languageService);
+        fileDialect = runnable.getDialect(languageService);
       }
 
       if (runnable is RunnableBlock) {
         i = _parseBlock(
           languageService,
-          dialect,
+          fileDialect,
           matcher,
           runnable,
           lines,

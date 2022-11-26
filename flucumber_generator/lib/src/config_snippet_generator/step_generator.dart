@@ -19,6 +19,7 @@ class StepGenerator extends ConfigSnippetGenerator {
       ..writeln("stepDefinition: '${stepMetadata.stepDefinition}',")
       ..writeln('runnerFunction: ${stepMetadata.stepMethodReference},')
       ..writeln('),');
+
     return stringBuffer.toString();
   }
 

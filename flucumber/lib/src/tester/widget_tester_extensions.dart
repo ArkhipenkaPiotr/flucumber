@@ -11,6 +11,7 @@ extension WidgetTesterExtensions on WidgetTester {
     if (!found && doThrow) {
       throw TestFailure('Target was not found ${target.toString()}');
     }
+
     return found;
   }
 
@@ -24,11 +25,13 @@ extension WidgetTesterExtensions on WidgetTester {
       do {
         if (condition()) {
           if (!instant) await pumpAndSettle();
+
           return true;
         }
         await pump(_minimalPumpDelay);
         instant = false;
       } while (binding.clock.now().isBefore(endTime));
+
       return false;
     });
   }

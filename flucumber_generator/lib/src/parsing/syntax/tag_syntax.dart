@@ -50,6 +50,7 @@ class TagSyntax extends RegExMatchedGherkinSyntax<TagsRunnable> {
         return AnnotatingBlock.values[blockLabels.indexOf(dialectPattern)];
       }
     }
+
     return null;
   }
 }

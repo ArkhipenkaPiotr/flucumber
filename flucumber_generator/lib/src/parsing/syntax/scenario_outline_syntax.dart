@@ -14,6 +14,7 @@ class ScenarioOutlineSyntax
         RegExMatchedGherkinSyntax.getMultiDialectRegexPattern(
       dialect.scenarioOutline,
     );
+
     return RegExp(
       '^\\s*(?:$dialectPattern):(?:\\s*(.+)\\s*)?\$',
       multiLine: false,
@@ -37,6 +38,7 @@ class ScenarioOutlineSyntax
     GherkinDialect dialect,
   ) {
     final name = pattern(dialect).firstMatch(line)!.group(1)!;
+
     return ScenarioOutlineRunnable(
       name.trim(),
       null,

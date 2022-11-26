@@ -6,13 +6,9 @@ void runFlucumberIntegrationTests({
   required List<FeatureFileRunner> featureFiles,
   List<String> filesToRun = const [],
 }) {
-  final Iterable<FeatureFileRunner> featureFilesToRun;
-  if (filesToRun.isEmpty) {
-    featureFilesToRun = featureFiles;
-  } else {
-    featureFilesToRun = featureFiles
-        .where((featureName) => filesToRun.contains(featureName.fileName));
-  }
+  final featureFilesToRun = filesToRun.isEmpty
+      ? featureFiles
+      : featureFiles.where((featureName) => filesToRun.contains(featureName.fileName));
 
   for (final feature in featureFilesToRun) {
     feature.run(appMainFunction);

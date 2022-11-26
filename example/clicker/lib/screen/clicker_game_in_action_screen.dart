@@ -24,8 +24,7 @@ class ClickerGameInActionScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ClickerGameInActionScreen> createState() =>
-      _ClickerGameInActionScreenState();
+  State<ClickerGameInActionScreen> createState() => _ClickerGameInActionScreenState();
 }
 
 class _ClickerGameInActionScreenState extends State<ClickerGameInActionScreen> {
@@ -39,10 +38,12 @@ class _ClickerGameInActionScreenState extends State<ClickerGameInActionScreen> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(milliseconds: _tickPeriodMillis),
-        (timer) {
-      _updateTime(timer.tick);
-    });
+    _timer = Timer.periodic(
+      const Duration(milliseconds: _tickPeriodMillis),
+      (timer) {
+        _updateTime(timer.tick);
+      },
+    );
   }
 
   @override
@@ -65,10 +66,7 @@ class _ClickerGameInActionScreenState extends State<ClickerGameInActionScreen> {
               const Spacer(),
               Text(
                 _timeLeft,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(fontSize: 42),
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 42),
               ),
               Text('Clicks: ${widget.state.clicks}'),
               const Spacer(),
@@ -92,6 +90,7 @@ class _ClickerGameInActionScreenState extends State<ClickerGameInActionScreen> {
     if (timeLeftMillis >= _timeOutMillis) {
       _timer.cancel();
       context.read<ClickerCubit>().onGameTimeout();
+
       return;
     }
 
@@ -140,17 +139,13 @@ class _ClickSpace extends StatelessWidget {
         height: 200,
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
-          border:
-              Border.all(color: Theme.of(context).primaryColorDark, width: 10),
+          border: Border.all(color: Theme.of(context).primaryColorDark, width: 10),
           shape: BoxShape.circle,
         ),
         child: Center(
           child: Text(
             'Click!',
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(color: Colors.white),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
           ),
         ),
       ),

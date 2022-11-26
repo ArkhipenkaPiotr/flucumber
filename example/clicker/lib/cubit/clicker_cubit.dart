@@ -54,6 +54,7 @@ class ClickerCubit extends Cubit<ClickerState> {
         return value;
       }
     }
+
     return GameProgress.low;
   }
 }
