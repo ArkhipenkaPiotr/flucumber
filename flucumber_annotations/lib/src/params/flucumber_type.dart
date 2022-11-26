@@ -1,5 +1,5 @@
 class FlucumberType {
-  static List<FlucumberType> allSupportedTypes = [
+  static final List<FlucumberType> allSupportedTypes = [
     FlucumberType(
       name: '{int}',
       matcher: '[-0-9]+',

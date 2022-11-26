@@ -45,6 +45,7 @@ class GherkinDialect {
     final then = map['then'] as List<String>;
     final and = map['and'] as List<String>;
     final but = map['but'] as List<String>;
+
     return GherkinDialect(
       name: map['name'] as String,
       nativeName: map['native'] as String,

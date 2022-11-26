@@ -12,8 +12,10 @@ class FlucumberContext {
 
   dynamic get(String key, [dynamic defaultValue]) {
     if (!_storage.containsKey(key)) {
+
       return defaultValue;
     }
+
     return _storage[key];
   }
 }

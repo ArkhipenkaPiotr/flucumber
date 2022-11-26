@@ -23,6 +23,7 @@ class TextLineSyntax extends RegExMatchedGherkinSyntax<TextLineRunnable> {
     final runnable = TextLineRunnable(debug)
       ..originalText = line
       ..text = line.trim();
+
     return runnable;
   }
 }
