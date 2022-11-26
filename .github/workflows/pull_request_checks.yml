@@ -49,6 +49,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+
       - name: Install melos and generate code
         run: |
           dart pub global activate melos
