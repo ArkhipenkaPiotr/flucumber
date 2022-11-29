@@ -28,7 +28,9 @@ class StepGenerator extends ConfigSnippetGenerator {
   ) {
     for (final fileMetadata in definitions) {
       final stepMetadata = fileMetadata.findStep(_stepRunnable.name);
-      if (stepMetadata != null) return stepMetadata;
+      if (stepMetadata != null) {
+        return stepMetadata;
+      }
     }
 
     throw Exception('Step definition for ${_stepRunnable.name} is not found');

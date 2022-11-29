@@ -24,7 +24,9 @@ extension WidgetTesterExtensions on WidgetTester {
       var instant = true;
       do {
         if (condition()) {
-          if (!instant) await pumpAndSettle();
+          if (!instant) {
+            await pumpAndSettle();
+          }
 
           return true;
         }
