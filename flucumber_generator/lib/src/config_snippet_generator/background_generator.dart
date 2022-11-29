@@ -23,6 +23,7 @@ class BackgroundGenerator extends ConfigSnippetGenerator {
     stringBuffer
       ..writeln('],')
       ..writeln('),');
+
     return stringBuffer.toString();
   }
 }

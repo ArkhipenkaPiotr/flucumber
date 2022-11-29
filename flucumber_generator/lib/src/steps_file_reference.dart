@@ -43,6 +43,7 @@ class StepsDefinitionFileMetadata {
       (e) {
         final methodName = contentMap[e];
         final methodReference = '$pseudonym.$methodName';
+
         return StepMetadata(
           stepDefinition: e,
           stepMethodReference: methodReference,
@@ -72,6 +73,7 @@ class StepsDefinitionFileMetadata {
     if (matchingRefs.isEmpty) return null;
 
     final firstMatchingStepMetadata = matchingRefs.first;
+
     return firstMatchingStepMetadata;
   }
 

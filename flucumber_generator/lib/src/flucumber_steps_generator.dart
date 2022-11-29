@@ -29,6 +29,7 @@ class FlucumberStepsGenerator extends Generator {
 
       resultMap[definition] = element.displayName;
     }
+
     return jsonEncode(resultMap);
   }
 

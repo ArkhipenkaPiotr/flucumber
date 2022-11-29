@@ -42,7 +42,7 @@ class ScenarioGenerator extends ConfigSnippetGenerator {
       stringBuffer
         ..writeln('ExampleVariable(')
         ..writeln("variableName: '$variableName',")
-        ..writeln('values: [${values?.map((e) => "'$e'").join(',')}],')
+        ..writeln('values: [${values?.map((e) => "'$e'").join(',')},],')
         ..writeln('),');
     }
 

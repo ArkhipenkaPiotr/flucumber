@@ -28,6 +28,7 @@ class ScenarioRunner {
 
     if (examples == null) {
       _runStepsInScenario(appMainFunction, backgroundRunner, []);
+
       return;
     }
 

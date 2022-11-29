@@ -35,6 +35,7 @@ class StepRunner {
         exampleValue.variableValue,
       );
     }
+
     return result;
   }
 
@@ -44,6 +45,7 @@ class StepRunner {
   ) async {
     if (runnerFunction is Future Function()) {
       await runnerFunction();
+
       return;
     }
 
@@ -58,20 +60,20 @@ class StepRunner {
       case 1:
         await runnerFunction(
           context,
-          params[0],
+          params.first,
         );
         break;
       case 2:
         await runnerFunction(
           context,
-          params[0],
+          params.first,
           params[1],
         );
         break;
       case 3:
         await runnerFunction(
           context,
-          params[0],
+          params.first,
           params[1],
           params[2],
         );
@@ -79,7 +81,7 @@ class StepRunner {
       case 4:
         await runnerFunction(
           context,
-          params[0],
+          params.first,
           params[1],
           params[2],
           params[3],
@@ -88,7 +90,7 @@ class StepRunner {
       case 5:
         await runnerFunction(
           context,
-          params[0],
+          params.first,
           params[1],
           params[2],
           params[3],
@@ -98,7 +100,7 @@ class StepRunner {
       case 6:
         await runnerFunction(
           context,
-          params[0],
+          params.first,
           params[1],
           params[2],
           params[3],
@@ -109,7 +111,7 @@ class StepRunner {
       case 7:
         await runnerFunction(
           context,
-          params[0],
+          params.first,
           params[1],
           params[2],
           params[3],

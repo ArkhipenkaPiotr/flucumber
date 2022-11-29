@@ -33,6 +33,7 @@ class MultilineStringSyntax
         'Multiline string block does not expect ${syntax.runtimeType} syntax.  Expects a text line',
       );
     }
+
     return false;
   }
 
@@ -44,6 +45,7 @@ class MultilineStringSyntax
   ) {
     final leadingWhitespace =
         RegExp(r'^(\s*)').firstMatch(line)?.group(1)?.length ?? 0;
+
     return MultilineStringRunnable(debug, leadingWhitespace: leadingWhitespace);
   }
 

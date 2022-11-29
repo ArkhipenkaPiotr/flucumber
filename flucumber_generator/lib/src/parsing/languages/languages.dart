@@ -1,6 +1,10 @@
 ///
 /// Language file take from https://github.com/cucumber/cucumber/blob/master/gherkin/gherkin-languages.json
 ///
+// Ignored because this file copied from another source
+// ignore_for_file: avoid-non-ascii-symbols
+// Ignored because this file copied from another source
+// ignore_for_file: prefer-trailing-comma
 final Map<String, dynamic> kLanguagesJson = {
   'af': {
     'and': ['* ', 'En '],

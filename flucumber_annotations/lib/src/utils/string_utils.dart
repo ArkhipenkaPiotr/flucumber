@@ -7,11 +7,7 @@ extension StringExtension on String {
         return indexes;
       }
 
-      if (lastIndex == null) {
-        lastIndex = indexOf(string);
-      } else {
-        lastIndex = indexOf(string, lastIndex + 1);
-      }
+      lastIndex = lastIndex == null ? indexOf(string) : indexOf(string, lastIndex + 1);
 
       if (lastIndex != -1) {
         indexes.add(lastIndex);

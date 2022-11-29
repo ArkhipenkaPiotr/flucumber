@@ -20,6 +20,7 @@ class FeatureSyntax extends RegExMatchedGherkinSyntax {
   ) {
     final name = pattern(dialect).firstMatch(line)?.group(1);
     final runnable = FeatureRunnable(name!, debug);
+
     return runnable;
   }
 
@@ -27,6 +28,7 @@ class FeatureSyntax extends RegExMatchedGherkinSyntax {
   RegExp pattern(GherkinDialect dialect) {
     final dialectPattern =
         RegExMatchedGherkinSyntax.getMultiDialectRegexPattern(dialect.feature);
+
     return RegExp(
       '^(?:$dialectPattern):\\s*(.+)\\s*',
       multiLine: false,

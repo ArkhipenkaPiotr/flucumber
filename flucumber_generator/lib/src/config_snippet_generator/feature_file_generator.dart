@@ -24,6 +24,7 @@ class FeatureFileGenerator extends ConfigSnippetGenerator {
     stringBuffer
       ..writeln('],')
       ..writeln('),');
+
     return stringBuffer.toString();
   }
 }

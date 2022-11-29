@@ -43,6 +43,7 @@ class StepSyntax extends RegExMatchedGherkinSyntax<StepRunnable> {
 
     final stepName = line.replaceFirst(keywordsRegexp, '');
     final runnable = StepRunnable(stepName, debug);
+
     return runnable;
   }
 }
