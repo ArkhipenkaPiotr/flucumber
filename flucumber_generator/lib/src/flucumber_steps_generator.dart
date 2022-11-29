@@ -15,7 +15,9 @@ class FlucumberStepsGenerator extends Generator {
   FutureOr<String?> generate(LibraryReader library, BuildStep buildStep) async {
     final annotatedElements = library.allAnnotatedWith(_stepChecker);
 
-    if (annotatedElements.isEmpty) return null;
+    if (annotatedElements.isEmpty) {
+      return null;
+    }
 
     final resultMap = <String, String>{};
     for (final annotatedElement in annotatedElements) {

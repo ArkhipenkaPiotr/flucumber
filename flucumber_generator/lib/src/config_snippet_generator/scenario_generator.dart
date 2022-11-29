@@ -26,7 +26,9 @@ class ScenarioGenerator extends ConfigSnippetGenerator {
 
   void _generateExamples(StringBuffer stringBuffer) {
     final runnable = _scenarioRunnable;
-    if (runnable is! ScenarioOutlineRunnable) return;
+    if (runnable is! ScenarioOutlineRunnable) {
+      return;
+    }
     final example = runnable.examples.first;
     final table = example.table;
 

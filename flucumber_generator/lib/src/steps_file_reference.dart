@@ -70,7 +70,9 @@ class StepsDefinitionFileMetadata {
 
       return RegExp(definition).hasMatch(stepName);
     });
-    if (matchingRefs.isEmpty) return null;
+    if (matchingRefs.isEmpty) {
+      return null;
+    }
 
     final firstMatchingStepMetadata = matchingRefs.first;
 
