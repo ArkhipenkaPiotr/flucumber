@@ -30,32 +30,3 @@ linter:
     prefer_final_in_for_each: true
     type_annotate_public_apis: true
     use_string_buffers: true
-
-dart_code_metrics:
-  anti-patterns:
-    - long-method:
-  rules:
-    - no-boolean-literal-compare
-    - prefer-trailing-comma
-    - prefer-conditional-expressions
-    - no-equal-then-else
-    - avoid-returning-widgets
-    - newline-before-return
-    - avoid-global-state
-    - avoid-missing-enum-constant-in-map
-    - avoid-nested-conditional-expressions:
-        acceptable-level: 1
-    - no-boolean-literal-compare
-    - no-object-declaration
-    - prefer-commenting-analyzer-ignores
-    - prefer-first
-    - prefer-last
-    - always-remove-listener
-    - avoid-unnecessary-setstate
-    - prefer-extracting-callbacks:
-        ignored-named-arguments:
-          - builder
-        allowed-line-count: 5
-    - prefer-single-widget-per-file:
-        ignore-private-widgets: true
-    - provide-correct-intl-args
